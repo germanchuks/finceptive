@@ -44,5 +44,5 @@ The MERN stack (MongoDB, Express.js, React, Node.js) is chosen for its flexibili
 
 ## Authors 👥
 
-Michael Chukwunwe - [Github](https://github.com/stuckwithprogression)
+Michael Chukwunwe - [Github](https://github.com/stuckwithprogression) 
 Daniel German - [Github](https://github.com/germanchuks)
