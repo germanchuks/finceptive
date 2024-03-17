@@ -16,7 +16,6 @@ const IncomeSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
         unique: true
     },
     category: {
@@ -38,6 +37,6 @@ const IncomeSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-}, {timestamps: true})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Income', IncomeSchema)
