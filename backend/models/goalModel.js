@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const savingGoalSchema = new mongoose.Schema({
-    goalTitle: {
+    title: {
         type: String,
         required: true,
         maxLength: 20
     },
-    goalAmount: {
+    targetAmount: {
         type: Number,
         default: 0,
         required: true
@@ -19,11 +19,11 @@ const savingGoalSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    goalDueDate: {
+    targetDate: {
         type: Date,
         required: true
     },
-    goalDescription: {
+    description: {
         type: String,
         trim: true,
         maxLength: 100
