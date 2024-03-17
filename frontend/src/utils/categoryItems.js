@@ -1,13 +1,13 @@
 
-import { 
+import {
     giftIcon,
-    bonusesIcon, 
+    bonusesIcon,
     freelanceIcon,
-    othersIcon, 
-    salesIcon, 
-    commissionIcon, 
-    investmentIcon, 
-    salaryIcon, 
+    othersIcon,
+    salesIcon,
+    commissionIcon,
+    investmentIcon,
+    salaryIcon,
     stockIcon,
     rentIcon,
     groceryIcon,
@@ -21,7 +21,13 @@ import {
     insuranceIcon,
     debtIcon,
     donationIcon,
-    utilityIcon
+    utilityIcon,
+    travelIcon,
+    kidsIcon,
+    educationIcon,
+    emergencyIcon,
+    vacationIcon,
+    retirementIcon
 } from './icons';
 
 
@@ -51,5 +57,19 @@ export const expenseCategories = [
     { value: 'debt', label: 'Debt', icon: debtIcon },
     { value: 'donation', label: 'Donation', icon: donationIcon },
     { value: 'utilities', label: 'Utility', icon: utilityIcon },
+    { value: 'others', label: 'Other', icon: othersIcon },
+];
+
+
+export const goalCategory = [
+    { value: 'housing', label: 'Housing', icon: rentIcon },
+    { value: 'travel', label: 'Travel', icon: travelIcon },
+    { value: 'debt', label: 'Debt', icon: debtIcon },
+    { value: 'retirement', label: 'Retirement', icon: retirementIcon },
+    { value: 'kids', label: 'Kids', icon: kidsIcon },
+    { value: 'education', label: 'Education', icon: educationIcon },
+    { value: 'vacation', label: 'Vacation', icon: vacationIcon },
+    { value: 'car', label: 'Car', icon: carIcon },
+    { value: 'emergencies', label: 'Emergencies', icon: emergencyIcon },
     { value: 'others', label: 'Other', icon: othersIcon },
 ];

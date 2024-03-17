@@ -1,11 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/GlobalContext";
 import styled from 'styled-components';
 import { toast } from 'react-hot-toast';
 import { homeIcon } from '../utils/icons';
-
+import axios from 'axios';
 
 const Login = () => {
 
@@ -13,6 +13,36 @@ const Login = () => {
 
   // initialize navigation
   const navigate = useNavigate()
+
+  // Check for active user session
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+
+        const response = await axios.get('/user');
+        if (response.data.error) {
+          toast.error('Session ended. Please enter username and password')
+        } else {
+          // Set authenticatication
+          setIsAuthenticated(true)
+          // Set User Id
+          setCurrentUserId(response.data.id)
+          //Set User Name
+          setCurrentUserName(response.data.username)
+
+          toast.success('Welcome back!')
+          navigate('/profile');
+
+        }
+      } catch (error) {
+        console.log(error)
+
+      }
+    }
+    fetchCurrentUser();
+  }, [])
+
+
 
   const defaultInput = {
     email: "",

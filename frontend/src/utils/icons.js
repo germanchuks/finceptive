@@ -32,6 +32,13 @@ import { FaCreditCard } from "react-icons/fa";
 import { ImPower } from "react-icons/im";
 import { GiHealthNormal } from "react-icons/gi";
 import { IoIosHome } from "react-icons/io";
+import { MdCardTravel } from "react-icons/md";
+import { FaBed } from "react-icons/fa6";
+import { FaChildren } from "react-icons/fa6";
+import { IoSchoolSharp } from "react-icons/io5";
+import { TbBeach } from "react-icons/tb";
+import { GrEmergency } from "react-icons/gr";
+
 
 export const homeIcon = <IoIosHome size={25} />
 export const dashboard = <MdDashboardCustomize />
@@ -72,3 +79,12 @@ export const debtIcon = <FcDebt size={25} />
 export const donationIcon = <BiSolidDonateHeart size={25} />
 export const utilityIcon = <FaCreditCard size={25} />
 export const healthIcon = <GiHealthNormal size={25} />;
+
+
+// Goal category Icons
+export const travelIcon = <MdCardTravel size={25} />
+export const retirementIcon = <FaBed size={25} />
+export const kidsIcon = <FaChildren size={25} />
+export const educationIcon = <IoSchoolSharp size={25} />
+export const vacationIcon = <TbBeach size={25} />
+export const emergencyIcon = <GrEmergency size={25} />
