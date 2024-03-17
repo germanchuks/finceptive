@@ -128,7 +128,12 @@ exports.getUser = async (req, res) => {
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, {}, (err, user) => {
             if (err) throw err;
-            res.json(user)
+            const { id, email, username } = user
+            res.json({
+                id: id,
+                email: email,
+                username: username
+            })
         })
     } else {
         res.json(null)
