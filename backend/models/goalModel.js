@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const savingGoalSchema = new mongoose.Schema({
+const goalSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -9,6 +9,10 @@ const savingGoalSchema = new mongoose.Schema({
     targetAmount: {
         type: Number,
         default: 0,
+        required: true
+    },
+    category: {
+        type: String,
         required: true
     },
     currentAmount: {
@@ -30,4 +34,4 @@ const savingGoalSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-module.exports = mongoose.model('Goal', savingGoalSchema)
+module.exports = mongoose.model('Goal', goalSchema)

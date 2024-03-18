@@ -15,15 +15,23 @@ exports.addIncome = async (req, res) => {
     try {
         //Validations
         if (!title || !category || !description || !date) {
-            return res.status(400).json({ message: 'All fields required' })
+            return res.json({
+                error: 'All fields required'
+            })
         }
-        if (amount <= 0 || !amount === 'number') {
-            return res.status(400).json({ message: "Amount must be a positive number" })
+        if (amount <= 0 || isNaN(amount)) {
+            return res.json({
+                error: "Amount must be a positive number"
+            })
         }
         await income.save()
-        res.status(200).json({ message: 'Income Added' })
+        res.json({
+            message: 'Income Added Successfully'
+        })
     } catch (error) {
-        res.status(500).json({ message: 'Server Error' })
+        res.json({
+            error: 'Server Error'
+        })
     }
     console.log(income)
 }
@@ -34,9 +42,11 @@ exports.getIncomes = async (req, res) => {
     const { userId } = req.query;
     try {
         const incomes = await IncomeSchema.find({ userId }).sort({ createdAt: -1 })
-        res.status(200).json(incomes)
+        res.json(incomes)
     } catch (error) {
-        res.status(500).json({ message: 'Server error' })
+        res.json({
+            error: 'Server error'
+        })
     }
 }
 
@@ -45,9 +55,13 @@ exports.deleteIncome = async (req, res) => {
     console.log(req.params);
     IncomeSchema.findByIdAndDelete(id)
         .then((income) => {
-            res.status(200).json({ message: 'Income Deleted' })
+            res.json({
+                message: 'Income Deleted Successfully'
+            })
         })
         .catch((err) => {
-            res.status(500).json({ message: 'Server Error' })
+            res.json({
+                error: 'Server Error'
+            })
         })
 }

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const cors = require('cors');
-const { registerUser, loginUser, logoutUser, getUser } = require('../controllers/authControllers');
+const { registerUser, loginUser, logoutUser, getUser } = require('../controllers/authController');
 
 // Middleware
 router.use(
