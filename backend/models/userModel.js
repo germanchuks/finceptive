@@ -18,6 +18,11 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         trim: true
     },
+    availableBalance: {
+        type: String,
+        default: 0,
+        trim: true
+    },
     avatarImage: {
         type: String
     },

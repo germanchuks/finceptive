@@ -60,12 +60,12 @@ exports.updateGoal = async (req, res) => {
         res.json({
             message: 'Goal Updated Successfully'
         })
+        console.log(updatedGoal)
     } catch (error) {
         res.json({
             error: 'Server error'
         })
     }
-    console.log(updatedGoal)
 }
 
 exports.deleteGoal = async (req, res) => {

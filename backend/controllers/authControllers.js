@@ -91,7 +91,7 @@ exports.loginUser = async (req, res) => {
             const payload = {
                 id: user._id,
                 email: user.email,
-                username: user.username
+                username: user.username,
             }
 
             const { id, email, username } = user
@@ -132,7 +132,7 @@ exports.getUser = async (req, res) => {
             res.json({
                 id: id,
                 email: email,
-                username: username
+                username: username,
             })
         })
     } else {

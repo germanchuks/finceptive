@@ -1,4 +1,6 @@
 const IncomeSchema = require("../models/incomeModel.js")
+const UserSchema = require("../models/userModel.js")
+
 
 exports.addIncome = async (req, res) => {
     const { title, amount, category, description, date, userId } = req.body
@@ -25,6 +27,7 @@ exports.addIncome = async (req, res) => {
             })
         }
         await income.save()
+
         res.json({
             message: 'Income Added Successfully'
         })
