@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const GlobalContext = createContext();
 
@@ -10,23 +11,32 @@ export const GlobalProvider = ({ children }) => {
     const [currentUserId, setCurrentUserId] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // // Get current user
+    // Check for active session
     // useEffect(() => {
     //     const fetchCurrentUser = async () => {
-    //         if (currentUser.id === "") {
-    //             try {
-    //                 const response = await axios.get('/user');
-    //                 setCurrentUser(prevUser => ({ ...prevUser, ...response.data }));
-    //             } catch (error) {
-    //                 console.error('Error fetching current user:', error);
+    //         try {
+
+    //             const response = await axios.get('/user');
+    //             if (response.data.error) {
+    //                 toast.error('Session ended. Please enter username and password')
+    //             } else {
+    //                 // Set authenticatication
+    //                 setIsAuthenticated(true)
+    //                 // Set User Id
+    //                 setCurrentUserId(response.data.id)
+    //                 //Set User Name
+    //                 setCurrentUserName(response.data.username)
+
+    //                 toast.success('Welcome back!')
+
     //             }
+    //         } catch (error) {
+    //             setError(error)
+
     //         }
-    //     };
-
+    //     }
     //     fetchCurrentUser();
-
-
-    // }, [isAuthenticated])
+    // }, [])
 
 
     // Save preferred currency state
@@ -158,7 +168,7 @@ export const GlobalProvider = ({ children }) => {
 
     // Get Goals
     const getGoals = async () => {
-        const response = await axios.get('get-goal', {
+        const response = await axios.get('get-goals', {
             params: {
                 userId: currentUserId
             }
@@ -166,7 +176,8 @@ export const GlobalProvider = ({ children }) => {
             .catch((error) => {
                 setError(error.response.data.message)
             })
-        setGoals(response.data)
+        setGoals(response)
+        // setGoals(response.data)
     }
 
     // Delete Goals
@@ -183,7 +194,9 @@ export const GlobalProvider = ({ children }) => {
     // Get total amount for a transaction type
     const getTotalAmount = (data) => {
         if (data) {
-            return data.reduce((total, item) => total + item.amount, 0)
+            return data.reduce((total, item) => total + item.amount, 0);
+        } else {
+            return 0;
         }
     };
 
@@ -195,32 +208,17 @@ export const GlobalProvider = ({ children }) => {
 
     return (
         <GlobalContext.Provider value={{
-            isAuthenticated,
-            setIsAuthenticated,
-            currentUserName,
-            setCurrentUserName,
-            currentUserId,
-            setCurrentUserId,
-            login,
-            logout,
-            register,
-            active,
-            setActive,
-            showSuccess,
-            setShowSuccess,
+            isAuthenticated, setIsAuthenticated,
+            currentUserName, setCurrentUserName, currentUserId, setCurrentUserId,
+            login, logout, register,
+            active, setActive,
+            showSuccess, setShowSuccess,
             currency,
-            addIncome,
-            incomes,
-            setIncomes,
-            getIncomes,
-            deleteIncome,
-            addExpense,
-            expenses,
-            setExpenses,
-            getExpenses,
-            deleteExpense,
-            setError,
-            getTotalAmount
+            addIncome, incomes, setIncomes, getIncomes, deleteIncome,
+            addExpense, expenses, setExpenses, getExpenses, deleteExpense,
+            addGoal, goals, setGoals, getGoals, deleteGoal,
+            getTotalAmount,
+            setError
         }}>
             {children}
         </GlobalContext.Provider>
