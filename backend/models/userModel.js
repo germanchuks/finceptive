@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
         trim: true
     },
     availableBalance: {
-        type: String,
+        type: Number,
         default: 0,
         trim: true
     },

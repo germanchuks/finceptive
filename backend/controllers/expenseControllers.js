@@ -52,16 +52,14 @@ exports.getExpense = async (req, res) => {
 
 exports.deleteExpense = async (req, res) => {
     const { id } = req.params;
-    console.log(req.params);
-    ExpenseSchema.findByIdAndDelete(id)
-        .then((expense) => {
-            res.json({
-                message: 'Expense Deleted Successfully'
-            })
+    try {
+        const item = await ExpenseSchema.findByIdAndDelete(id)
+        res.json({
+            amount: item.amount
         })
-        .catch((err) => {
-            res.json({
-                error: 'Server Error'
-            })
+    } catch (error) {
+        res.json({
+            error: 'Server Error'
         })
+    }
 }

@@ -70,16 +70,14 @@ exports.updateGoal = async (req, res) => {
 
 exports.deleteGoal = async (req, res) => {
     const { id } = req.params;
-    console.log(req.params);
-    GoalSchema.findByIdAndDelete(id)
-        .then((goal) => {
-            res.json({
-                message: 'Goal Deleted Successfully'
-            })
+    try {
+        const item = await GoalSchema.findByIdAndDelete(id)
+        res.json({
+            amount: item.currentAmount
         })
-        .catch((err) => {
-            res.json({
-                error: 'Server Error'
-            })
+    } catch (error) {
+        res.json({
+            error: 'Server Error'
         })
+    }
 }
