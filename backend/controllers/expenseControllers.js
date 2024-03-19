@@ -15,21 +15,28 @@ exports.addExpense = async (req, res) => {
     try {
         //Validations
         if (!title || !category || !description || !date) {
-            return res.status(400).json({ message: 'All fields required' })
+            return res.json({
+                error: 'All fields required'
+            })
         }
-        if (amount <= 0 || !amount === 'number') {
-            return res.status(400).json({ message: "Amount must be a positive number" })
+        if (amount <= 0 || isNaN(amount)) {
+            return res.json({
+                error: "Amount must be a positive number"
+            })
         }
         await expense.save()
-        res.status(200).json({ message: 'Expense Added' })
+        res.json({
+            message: 'Expense Added Succesfully'
+        })
     } catch (error) {
-        res.status(500).json({ message: 'Server Error' })
+        res.json({
+            error: 'Server Error'
+        })
     }
     console.log(expense)
 }
 
 exports.getExpense = async (req, res) => {
-
     // Check current user id
     const { userId } = req.query;
 
@@ -37,7 +44,9 @@ exports.getExpense = async (req, res) => {
         const expenses = await ExpenseSchema.find({ userId }).sort({ createdAt: -1 })
         return res.json(expenses)
     } catch (error) {
-        return res.json({ message: 'Server error' })
+        return res.json({
+            error: 'Server error'
+        })
     }
 }
 
@@ -46,9 +55,13 @@ exports.deleteExpense = async (req, res) => {
     console.log(req.params);
     ExpenseSchema.findByIdAndDelete(id)
         .then((expense) => {
-            res.status(200).json({ message: 'Expense Deleted' })
+            res.json({
+                message: 'Expense Deleted Successfully'
+            })
         })
         .catch((err) => {
-            res.status(500).json({ message: 'Server Error' })
+            res.json({
+                error: 'Server Error'
+            })
         })
 }
