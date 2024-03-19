@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const Login = () => {
 
-  const { login, setCurrentUserName, setCurrentUserId, currentUserId, getIncome, getExpenses, setIsAuthenticated } = useGlobalContext()
+  const { login, setCurrentUserName, setCurrentUserId, setIsAuthenticated } = useGlobalContext()
 
   // initialize navigation
   const navigate = useNavigate()
@@ -25,8 +25,10 @@ const Login = () => {
         } else {
           // Set authenticatication
           setIsAuthenticated(true)
+
           // Set User Id
           setCurrentUserId(response.data.id)
+
           //Set User Name
           setCurrentUserName(response.data.username)
 
@@ -65,15 +67,19 @@ const Login = () => {
       } else {
         // Set authentication to true
         setIsAuthenticated(true);
+
         // Set User Id
         setCurrentUserId(response.data.id)
 
+        // Empty input fields 
         setInputs(defaultInput)
 
+        // Notify success
         toast.success('Login successful!')
 
         //Set User Name
         setCurrentUserName(response.data.username)
+
         // Navigate to user profile and call income and api endpoints
         navigate('/profile');
       }

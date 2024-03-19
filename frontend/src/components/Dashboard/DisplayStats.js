@@ -6,31 +6,36 @@ import MonthlyStat from './MonthlyStat'
 
 const DisplayStats = () => {
 
-  const { currency, incomes, expenses, getTotalAmount } = useGlobalContext()
+  const { currency, incomes, expenses, goals, availableBalance, getTotalAmount } = useGlobalContext()
+
+  const totalIncomes = getTotalAmount(incomes);
+  const totalExpenses = getTotalAmount(expenses);
+  const totalGoals = getTotalAmount(goals);
 
   return (
     <DisplayStatsStyled>
       <div className="figures">
-
         <div className="available-balance">
-          <h5>Available Balance</h5> <div className='amount'> {currency} {'200,000.00'}</div>
+          <h5>Available Balance</h5> <div className='amount'> {currency} {availableBalance}</div>
         </div>
         <div className="other-stats">
           <div className="income-display stat">
             <span className="title">Income</span>
-            <span className="amount">{currency} {getTotalAmount(incomes)}</span>
+            <span className="amount">{currency} {totalIncomes}</span>
           </div>
           <div className="expense-display stat">
             <span className="title">Expense</span>
-            <span className="amount">{currency} {getTotalAmount(expenses)}</span>
+            <span className="amount">{currency} {totalExpenses}</span>
           </div>
           <div className="goal-display stat">
             <span className="title">Goals</span>
-            <span className="amount">{currency} {'100000'}</span>
+            <span className="amount">{currency} {totalGoals}</span>
           </div>
         </div>
       </div>
+
       <div className="chart-container"><DoughnutChart /></div>
+
       <div className="monthly-stat-container">
         <MonthlyStat />
       </div>
@@ -41,13 +46,12 @@ const DisplayStats = () => {
 const DisplayStatsStyled = styled.div`
   display: flex;
   gap: 1rem;
-  align-items: center;
   width: 100%;
   height: 100%;
   border-radius: 10px;
 
   .figures {
-    width: 35%;
+    width: 40%;
 
     .available-balance {
       display: flex;
@@ -71,7 +75,7 @@ const DisplayStatsStyled = styled.div`
         justify-content: right;
       }
     }
-
+  
     .other-stats {
       display: flex;
       gap: 1rem;
@@ -126,9 +130,22 @@ const DisplayStatsStyled = styled.div`
       }
     }
   }
+
   .chart-container {
     border-right: 1.5px solid #BBB7C4;
     padding-right: 15px;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .monthly-stat-container {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 `;
 

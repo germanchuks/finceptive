@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { InnerLayout } from '../../styles/Layout'
 import DisplayStats from './DisplayStats'
 import { useGlobalContext } from '../../context/GlobalContext'
+import History from '../History/History'
+import GoalProgress from './GoalProgress'
 
 function Dashboard() {
 
@@ -18,15 +20,13 @@ function Dashboard() {
           <section className="quick-stats">
             <DisplayStats />
           </section>
-          <div className="recent-transactions">RECENT</div>
-          <div className="right">
-            <div className="total-spent-range">
-              Total Spent
+          <div className="other-stats">
+            <div className="recent-transactions">
+              <History />
             </div>
             <div className="goal-progress">
-              Goal
+              <GoalProgress />
             </div>
-
           </div>
         </div>
       </InnerLayout>
@@ -37,14 +37,12 @@ function Dashboard() {
 const DashboardStyled = styled.div`
   overflow: auto;
   display: flex;
-  height: 87vh;
+  height: 85vh;
 
   .dashboard-container {
     display: flex;
     flex-direction: column;
     width: 100%;
-    justify-content: space-between;
-    position: relative;
     height: 100%;
     gap: 0.5rem;
 
@@ -53,47 +51,40 @@ const DashboardStyled = styled.div`
       font-size: 25px;
       padding-bottom: 10px;
       border-bottom: 1.5px solid #BBB7C4;
+      flex: 0.3;
     }
 
     .quick-stats {
-      display: flex;;
+      display: flex;
       align-items: center;
       width: 100%;
+      flex: 1.2;
       gap: 1rem;
       justify-content: center;
 
     }
 
-    .recent-transactions {
+    .other-stats {
       display: flex;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      flex: 1;
-      border: 1px solid #000;
-      border-radius: 20px;
-    }
-  }
+      border-top: 1px solid grey;
+      gap: 1.5rem;
+      padding-top: 1rem;
+      flex: 3;
 
-    .right {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 40%;
-      justify-content: center;
-
-      .total-spent-range {
+      .recent-transactions {
         display: flex;
-        height: 30%;
-        width: 100%;
+        flex: 1.5;
+        justify-content: center;
+        border-radius: 20px;
       }
 
       .goal-progress {
         display: flex;
-        height: 30%;
-        width: 100%;
+        flex: 1;
       }
+
     }
+  }
 `
 
 export default Dashboard
