@@ -9,7 +9,7 @@ import { homeIcon } from '../utils/icons';
 
 const Register = () => {
 
-  const { register, setCurrentUser } = useGlobalContext()
+  const { register } = useGlobalContext()
 
   const navigate = useNavigate()
 
@@ -19,8 +19,6 @@ const Register = () => {
     password: "",
   }
   const [inputs, setInputs] = useState(defaultInput)
-
-  const notify = (msg) => toast(msg);
 
   const handleChange = (e) => {
     setInputs(prev => ({ ...inputs, [e.target.name]: e.target.value }))

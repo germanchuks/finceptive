@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from 'axios';
-import { toast } from 'react-hot-toast';
 
 const GlobalContext = createContext();
 
@@ -11,48 +10,44 @@ export const GlobalProvider = ({ children }) => {
     const [currentUserId, setCurrentUserId] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Check for active session
-    // useEffect(() => {
-    //     const fetchCurrentUser = async () => {
-    //         try {
-
-    //             const response = await axios.get('/user');
-    //             if (response.data.error) {
-    //                 toast.error('Session ended. Please enter username and password')
-    //             } else {
-    //                 // Set authenticatication
-    //                 setIsAuthenticated(true)
-    //                 // Set User Id
-    //                 setCurrentUserId(response.data.id)
-    //                 //Set User Name
-    //                 setCurrentUserName(response.data.username)
-
-    //                 toast.success('Welcome back!')
-
-    //             }
-    //         } catch (error) {
-    //             setError(error)
-
-    //         }
-    //     }
-    //     fetchCurrentUser();
-    // }, [])
-
-
     // Save preferred currency state
     const [currency, setCurrency] = useState("₦")
-
-    // Success dialog display
-    const [showSuccess, setShowSuccess] = useState({ show: false, message: '' });
 
     //Current navigation bar
     const [active, setActive] = useState(1)
 
-    const [transactions, setTransactions] = useState([])
+    // const [transactions, setTransactions] = useState([])
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
     const [goals, setGoals] = useState([])
     const [error, setError] = useState(null)
+
+    // Handle balance updates
+    const [availableBalance, setAvailableBalance] = useState();
+
+
+    // Update balance 
+    const updateBalance = async (category, amount) => {
+        const payload = { amount: amount }
+        if (category === "income") {
+            try {
+                const response = await axios.put(`/increase-balance/${currentUserId}`, payload)
+                setAvailableBalance(response.data.balance);
+                return response;
+
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            try {
+                const response = await axios.put(`/decrease-balance/${currentUserId}`, payload)
+                setAvailableBalance(response.data.balance);
+                return response;
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
 
 
     //----------------------------AUTHENTICATION------------------//
@@ -60,7 +55,6 @@ export const GlobalProvider = ({ children }) => {
     // Handle User Login
     const login = async (inputs) => {
         const response = await axios.post('auth/login', inputs)
-        console.log(response)
         return response;
     }
 
@@ -69,6 +63,7 @@ export const GlobalProvider = ({ children }) => {
         await axios.post('auth/logout')
         setCurrentUserName(null);
         setCurrentUserId(null);
+        setAvailableBalance(0);
         setIsAuthenticated(false);
     }
 
@@ -84,11 +79,7 @@ export const GlobalProvider = ({ children }) => {
     //Add Income
     const addIncome = async (income) => {
         const response = await axios.post('add-income', income)
-            .catch((error) => {
-                setError(error.response.data.message)
-            })
-        getIncomes()
-        setShowSuccess({ show: true, message: 'Income added successfully!' })
+        return response
     }
 
     //Get Incomes
@@ -107,12 +98,7 @@ export const GlobalProvider = ({ children }) => {
     //Delete Income
     const deleteIncome = async (id) => {
         const response = await axios.delete(`delete-income/${id}`)
-            .catch((error) => {
-                setError(error.response.data.message)
-            })
-        getIncomes()
-        setShowSuccess({ show: true, message: 'Income deleted successfully!' })
-
+        return response
     }
 
 
@@ -122,11 +108,7 @@ export const GlobalProvider = ({ children }) => {
     // Add Expense
     const addExpense = async (expense) => {
         const response = await axios.post('add-expense', expense)
-            .catch((error) => {
-                setError(error.response.data.message)
-            })
-        getExpenses()
-        setShowSuccess({ show: true, message: 'Expense added successfully!' })
+        return response
     }
 
     // Get expense
@@ -145,11 +127,7 @@ export const GlobalProvider = ({ children }) => {
     // Delete Expense
     const deleteExpense = async (id) => {
         const response = await axios.delete(`delete-expense/${id}`)
-            .catch((error) => {
-                setError(error.response.data.message)
-            })
-        getExpenses()
-        setShowSuccess({ show: true, message: 'Expense deleted successfully!' })
+        return response
     }
 
 
@@ -159,11 +137,7 @@ export const GlobalProvider = ({ children }) => {
     // Add Goal
     const addGoal = async (goal) => {
         const response = await axios.post('add-goal', goal)
-            .catch((error) => {
-                setError(error.response.data.message)
-            })
-        getGoals()
-        setShowSuccess({ show: true, message: 'Goal added successfully!' })
+        return response
     }
 
     // Get Goals
@@ -176,35 +150,51 @@ export const GlobalProvider = ({ children }) => {
             .catch((error) => {
                 setError(error.response.data.message)
             })
-        setGoals(response)
-        // setGoals(response.data)
+        setGoals(response.data)
     }
 
-    // Delete Goals
+    // Delete Goal
     const deleteGoal = async (id) => {
         const response = await axios.delete(`delete-goal/${id}`)
-            .catch((error) => {
-                setError(error.response.data.message)
-            })
-        getGoals()
-        setShowSuccess({ show: true, message: 'Goal deleted successfully!' })
+        return response
+    }
+
+    // Update Goal
+    const updateGoal = async (id, input) => {
+        const response = await axios.put(`update-goal/${id}`, input)
+        return response
     }
 
 
     // Get total amount for a transaction type
     const getTotalAmount = (data) => {
-        if (data) {
-            return data.reduce((total, item) => total + item.amount, 0);
+        if (data.length) {
+            if (data == goals) {
+                return data.reduce((total, item) => total + item.currentAmount, 0);
+            } else {
+                return data.reduce((total, item) => total + item.amount, 0);
+            }
         } else {
             return 0;
         }
     };
 
 
-    // Remove success notification window after 4secs.
-    useEffect(() => {
-        setTimeout(() => setShowSuccess(false), 4000);
-    }, [showSuccess])
+    // Get transactions list sorted by date
+    const sortByDate = (data) => {
+        return data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    };
+
+    const transactionHistory = () => {
+        const transactions = [...incomes, ...expenses]
+        const sortedTransactions = sortByDate(transactions);
+        return sortedTransactions;
+    }
+
+    const userGoals = () => {
+        const sortedGoals = sortByDate(goals);
+        return sortedGoals;
+    }
 
     return (
         <GlobalContext.Provider value={{
@@ -212,11 +202,12 @@ export const GlobalProvider = ({ children }) => {
             currentUserName, setCurrentUserName, currentUserId, setCurrentUserId,
             login, logout, register,
             active, setActive,
-            showSuccess, setShowSuccess,
             currency,
+            transactionHistory, userGoals,
+            updateBalance, availableBalance, setAvailableBalance,
             addIncome, incomes, setIncomes, getIncomes, deleteIncome,
             addExpense, expenses, setExpenses, getExpenses, deleteExpense,
-            addGoal, goals, setGoals, getGoals, deleteGoal,
+            addGoal, goals, setGoals, getGoals, deleteGoal, updateGoal,
             getTotalAmount,
             setError
         }}>

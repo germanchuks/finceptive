@@ -38,6 +38,7 @@ import { FaChildren } from "react-icons/fa6";
 import { IoSchoolSharp } from "react-icons/io5";
 import { TbBeach } from "react-icons/tb";
 import { GrEmergency } from "react-icons/gr";
+import { GrStatusGood } from "react-icons/gr";
 
 
 export const homeIcon = <IoIosHome size={25} />
@@ -52,7 +53,7 @@ export const calender = <CiCalendarDate />
 export const deleteBin = <MdDeleteForever size={20} />
 export const note = <FaRegCommentDots />
 export const plus = <GrAdd />
-
+export const goodIcon = <GrStatusGood />
 
 //Income category icons
 export const giftIcon = <ImGift size={25} />

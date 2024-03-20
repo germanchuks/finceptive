@@ -61,7 +61,7 @@ export const expenseCategories = [
 ];
 
 
-export const goalCategory = [
+export const goalCategories = [
     { value: 'housing', label: 'Housing', icon: rentIcon },
     { value: 'travel', label: 'Travel', icon: travelIcon },
     { value: 'debt', label: 'Debt', icon: debtIcon },
