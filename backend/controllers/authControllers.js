@@ -42,8 +42,10 @@ exports.registerUser = async (req, res) => {
         })
 
         return res.json(newUser)
-    } catch (error) {
-        console.log(error)
+    } catch {
+        res.json({
+            error: "Could not complete registration. Try again later."
+        })
     }
 }
 

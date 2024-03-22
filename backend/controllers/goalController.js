@@ -52,21 +52,7 @@ exports.getGoals = async (req, res) => {
     }
 }
 
-// exports.updateGoal = async (req, res) => {
-//     const { id } = req.params;
-//     const update = { ...req.body }
-//     try {
-//         const updatedGoal = await GoalSchema.findByIdAndUpdate(id, update, { new: true })
-//         res.json({
-//             message: 'Goal Updated Successfully'
-//         })
-//         console.log(updatedGoal)
-//     } catch (error) {
-//         res.json({
-//             error: 'Server error'
-//         })
-//     }
-// }
+
 
 exports.deleteGoal = async (req, res) => {
     const { id } = req.params;

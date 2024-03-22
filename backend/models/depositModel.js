@@ -17,7 +17,11 @@ const depositSchema = new mongoose.Schema({
     title: {
         type: String,
         trim: true,
-    }
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
 }, { timestamps: true })
 
 module.exports = mongoose.model('Deposit', depositSchema)

@@ -52,7 +52,6 @@ exports.getDeposits = async (req, res) => {
                 deposits: deposits
             });
         }
-        console.log(deposits)
     } catch (error) {
         res.json({
             error: 'Server error'
