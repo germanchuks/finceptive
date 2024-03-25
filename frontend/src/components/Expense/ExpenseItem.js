@@ -4,20 +4,23 @@ import styled from 'styled-components'
 import { useGlobalContext } from '../../context/GlobalContext';
 import { ButtonStyled } from '../Form/FormComponentsStyled';
 import { expenseCategories } from '../../utils/categoryItems';
-
+import { toast } from 'react-hot-toast';
 
 function ExpenseItem({
-    id,
-    title,
-    amount,
-    description,
-    category,
-    date
+  id,
+  title,
+  amount,
+  description,
+  category,
+  date,
+  dashboard
 }) {
-  
-  const {currency, deleteExpense} = useGlobalContext()
 
-  
+  const { currency, deleteExpense, getExpenses, getUserBalance, getBudgets } = useGlobalContext()
+
+
+  // const balance = parseFloat(availableBalance)
+
   const getCategoryIcon = (category) => {
     const matchingCategory = expenseCategories.find(
       (item) => item.value === category
@@ -25,35 +28,52 @@ function ExpenseItem({
     return matchingCategory ? matchingCategory.icon : othersIcon;
 
   };
-  
+
   const [clicked, setClicked] = useState(false)
-  
+
   const handleClick = () => {
     setClicked(!clicked);
   }
 
+  const handleDelete = async () => {
+    const response = await deleteExpense(id);
+    if (response.data.error) {
+      toast.error(response.data.error)
+    } else {
+      // // Update user balance
+      // const newBalance = balance + parseFloat(response.data.amount)
+      // console.log(response.data.amount)
+      // await updateBalance("income", newBalance);
+      getBudgets();
+      getExpenses();
+      getUserBalance();
+      toast.success(response.data.message)
+    }
+  }
+
   return (
-    <ExpenseItemStyled >
+    <ExpenseItemStyled>
       <div className="main-content">
         <div className="icon">
           {getCategoryIcon(category)}
         </div>
-        <div className="content">
-            <h5 className="title">{title}</h5>
-            <span className="date">
-              {calender} {date.substring(0, 10)}
-              <span 
+        <div className="info-container">
+          <h5 className="title">{title}</h5>
+          <span className="date">
+            {calender} {date.substring(0, 10)}
+            {!dashboard &&
+              <span
                 className='open-more'
                 onClick={handleClick}
-                >
-                  {clicked ? 'See less...' : 'See more...'}
-                </span>
-            </span>
+              >
+                {clicked ? 'See less...' : 'See more...'}
+              </span>}
+          </span>
         </div>
         <div className="amount">- {currency} {amount} </div>
       </div>
       <div className="more-content" style={{
-        display: clicked ? 'flex' : 'none' 
+        display: clicked ? 'flex' : 'none'
       }}>
         <div className="description">
           {note} {description}
@@ -64,7 +84,7 @@ function ExpenseItem({
             color: "#FFF",
             borderRadius: "50%",
             padding: "5px",
-          }} onClick={() => deleteExpense(id)}>
+          }} onClick={handleDelete}>
             {deleteBin}
           </ButtonStyled>
         </div>
@@ -103,7 +123,7 @@ const ExpenseItemStyled = styled.div`
       flex: 1;
     }
 
-    .content {
+    .info-container {
       display: flex;
       flex-direction: column;
       flex: 8;
@@ -141,6 +161,7 @@ const ExpenseItemStyled = styled.div`
       justify-content: flex-end;
       font-weight: bold;
       color: #E03D45;
+      font-size: medium;
     }
      
   }
@@ -171,4 +192,4 @@ const ExpenseItemStyled = styled.div`
   }
 `;
 
-export default ExpenseItem;
+export default ExpenseItem

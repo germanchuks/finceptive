@@ -9,19 +9,35 @@ import Expense from "../components/Expense/Expense";
 import Goal from "../components/Goal/Goal";
 import Setting from "../components/Setting/Setting";
 import Transaction from "../components/Transaction/Transaction";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { MainLayout, InnerLayout } from "../styles/Layout";
+import { MainLayout } from "../styles/Layout";
+import AlertDialog from '../components/Notification/Notification';
+import { useNavigate } from 'react-router-dom';
+
 
 function Profile() {
 
-    const { active, setActive, setAvailableBalance, setExpenses, setIncomes, setGoals, isAuthenticated, currentUserId, setError } = useGlobalContext();
+    const {
+        active, setActive,
+        logout,
+        setCurrency, setCurrentAvatar,
+        setAvailableBalance, setExpenses, setIncomes, setGoals, setBudgets,
+        isAuthenticated, currentUserId, setError,
+        setDepositHistory, setWithdrawalHistory } = useGlobalContext();
 
     // Fetch user data on load;
     useEffect(() => {
         const fetchUser = async () => {
-
             if (isAuthenticated) {
+                //Fetch balance
+                const getInfo = await axios.get(`get-info/${currentUserId}`)
+                    .catch((error) => {
+                        console.log(error.response.data.message)
+                    })
+                setAvailableBalance(getInfo.data.balance)
+                setCurrentAvatar(getInfo.data.avatar)
+                setCurrency(getInfo.data.currency)
+
                 //fetch expense
                 const expenses = await axios.get('get-expenses', {
                     params: {
@@ -29,7 +45,7 @@ function Profile() {
                     }
                 })
                     .catch((error) => {
-                        setError(error.response.data.message)
+                        console.log(error.response.data.message)
                     })
                 setExpenses(expenses.data)
 
@@ -40,7 +56,7 @@ function Profile() {
                     }
                 })
                     .catch((error) => {
-                        setError(error.response.data.message)
+                        console.log(error.response.data.message)
                     })
                 setIncomes(incomes.data)
 
@@ -51,22 +67,60 @@ function Profile() {
                     }
                 })
                     .catch((error) => {
-                        setError(error.response.data.message)
+                        console.log(error.response.data.message)
                     })
                 setGoals(goals.data)
 
-                //Fetch balance
-                const userBalance = await axios.get(`get-balance/${currentUserId}`)
+
+                // Fetch all withdrawal history
+                const withdrawalHistory = await axios.get('get-withdrawals', {
+                    params: {
+                        userId: currentUserId
+                    }
+                })
                     .catch((error) => {
                         setError(error.response.data.message)
                     })
-                setAvailableBalance(userBalance.data.balance)
+                setWithdrawalHistory(withdrawalHistory.data)
 
+
+                // Fetch all deposit history
+                const depositHistory = await axios.get('get-deposits', {
+                    params: {
+                        userId: currentUserId
+                    }
+                })
+                    .catch((error) => {
+                        console.log(error.response.data.message)
+                    })
+                setDepositHistory(depositHistory.data)
+
+
+                // Fetch budgets
+                const userBudgets = await axios.get('get-budgets', {
+                    params: {
+                        userId: currentUserId
+                    }
+                })
+                    .catch((error) => {
+                        console.log(error.response.data.message)
+                    })
+                setBudgets(userBudgets.data)
             }
         }
 
         fetchUser();
+        // eslint-disable-next-line
     }, [])
+
+    const navigate = useNavigate();
+
+    const [showAlert, setShowAlert] = useState(false)
+
+    const handleSignOut = () => {
+        logout()
+        navigate('/');
+    }
 
     const showData = () => {
         switch (active) {
@@ -92,10 +146,11 @@ function Profile() {
         <ProfileStyled>
             <Header />
             <MainLayout>
-                <NavigationMenu active={active} setActive={setActive} />
+                <NavigationMenu active={active} setActive={setActive} showAlert={showAlert} setShowAlert={setShowAlert} />
                 <div className="content">
                     {showData()}
                 </div>
+                {showAlert && <AlertDialog showAlert={showAlert} setShowAlert={setShowAlert} title="Sign Out" contextText="Are you sure?" actionTrue={() => handleSignOut()} />}
             </MainLayout>
         </ProfileStyled>
     )
@@ -118,6 +173,13 @@ const ProfileStyled = styled.div`
         &::-webkit-scrollbar{
         width: 0;
         }
+    }
+
+    .alert {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        color: black !important;
     }
 `
 
