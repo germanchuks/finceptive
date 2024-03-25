@@ -1,11 +1,16 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useGlobalContext } from "../context/GlobalContext";
+import React, { useState, useEffect } from "react";
+import { useGlobalContext } from '../context/GlobalContext';
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components';
 import { toast } from 'react-hot-toast';
 import { homeIcon } from '../utils/icons';
+import Box from '@mui/material/Box';
+import { ButtonStyled, DivStyled } from '../components/Form/FormComponentsStyled';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import axios from 'axios';
+import background from '../img/login-background.jpg'
+
 
 const Login = () => {
 
@@ -32,20 +37,20 @@ const Login = () => {
           //Set User Name
           setCurrentUserName(response.data.username)
 
-          toast.success('Welcome back!')
+          toast.success('Welcome!')
           navigate('/profile');
 
         }
-      } catch (error) {
-        console.log(error)
-
+      } catch {
+        return;
       }
     }
     fetchCurrentUser();
+    // eslint-disable-next-line
   }, [])
 
 
-
+  // No active session, authenticate user
   const defaultInput = {
     email: "",
     password: "",
@@ -56,7 +61,21 @@ const Login = () => {
     setInputs(inputs => ({ ...inputs, [e.target.name]: e.target.value }))
   }
 
-  //Send user input to endpoint
+  // Handle password visibility
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+  });
+
+  // Handle password visibility toggle
+  const handleClickShowPassword = (fieldName) => {
+    setShowPassword((prevState) => ({
+      ...prevState,
+      [fieldName]: !prevState[fieldName],
+    }));
+  };
+
+
+  // Handle submit
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = inputs;
@@ -91,77 +110,88 @@ const Login = () => {
 
   return (
     <LoginStyled>
-      <Link to="/">{homeIcon}</Link>
-      <h1>Sign in</h1>
-      <form>
-        <input
-          required
-          name='email'
-          value={inputs.email}
-          type="text"
-          placeholder='email'
-          onChange={handleChange} />
-        <input
-          required
-          name='password'
-          value={inputs.password}
-          type="password"
-          placeholder='password'
-          onChange={handleChange} />
-        <button onClick={loginUser}>Sign in</button>
-        <span>Don't have an account? <Link to="/register">Sign up</Link> </span>
-      </form>
+      <div className="login-form-container">
+        <Link to="/">{homeIcon}</Link>
+        <Box
+          component="form"
+          onSubmit={loginUser}
+          sx={{
+            height: '100%',
+            '& .MuiTextField-root': { width: '100%' },
+          }}
+        >
+          <DivStyled>
+            <div className="sign-in-header"><h3>Sign in</h3></div>
+            <TextField
+              name='email'
+              value={inputs.email}
+              type="email"
+              label='Email'
+              size='small'
+              onChange={handleChange}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ style: { fontSize: 14 } }}
+              variant="outlined"
+              required
+            />
+            <TextField
+              required
+              name='password'
+              value={inputs.password}
+              type={showPassword.password ? "text" : "password"}
+              label='Password'
+              onChange={handleChange}
+              variant="outlined"
+              size='small'
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => handleClickShowPassword('password')}
+                      edge="end"
+                    >
+                      {showPassword.password ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <ButtonStyled>Sign in</ButtonStyled>
+            <b>Dont have an account?<Link to='/register'> Sign up</Link> </b>
+          </DivStyled>
+        </Box>
+      </div>
     </LoginStyled>
   )
-}
+};
 
-const LoginStyled = styled.div` 
+const LoginStyled = styled.div`
+  color: #000 !important;
+  background-color: #EAE1F2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(${background});
+  background-size: cover;
+  background-repeat: no-repeat;
 
-    h1 {
-        font-size: 20px;
-        color: teal;
-        margin-bottom: 20px;
-    }
 
-    form {
+  .login-form-container {
+    height: auto;
+    width: 350px;
+
+    b, .sign-in-header {
         display: flex;
-        flex-direction: column;
-        padding: 30px;
-        background-color: grey;
-        width: 250px;
-        gap: 20px;
-
-        input {
-            padding: 10px;
-            font-size: 11px;
-            border: none;
-            border-bottom: 1px solid gray;
-        }
-
-        input:focus {
-            outline: none;
-        }
-
-        button {
-            padding: 10px;
-            border: none;
-            background-color: teal;
-            cursor: pointer;
-            color: white;
-        }
-
-        span {
-            font-size: 13px;
-            text-align: center;
-        }
-
-        p {
-            font-size: 12px;
-            color: red;
-            text-align: center;
-        }
-    }
+        justify-content: center;
+        gap: 0.3rem;
+        padding-bottom: 0.7rem;
+      }
+  }
 `
 
 
-export default Login
+export default Login;
