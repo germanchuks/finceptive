@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context/GlobalContext'
 import DoughnutChart from '../Chart/DoughnutChart'
-import MonthlyStat from './MonthlyStat'
+import Budget from './Budget'
 
 const DisplayStats = () => {
 
@@ -11,6 +11,7 @@ const DisplayStats = () => {
   const totalIncomes = getTotalAmount(incomes);
   const totalExpenses = getTotalAmount(expenses);
   const totalGoals = getTotalAmount(goals);
+
 
   return (
     <DisplayStatsStyled>
@@ -36,8 +37,8 @@ const DisplayStats = () => {
 
       <div className="chart-container"><DoughnutChart /></div>
 
-      <div className="monthly-stat-container">
-        <MonthlyStat />
+      <div className="budget-container">
+        <Budget />
       </div>
     </DisplayStatsStyled>
   )
@@ -57,7 +58,7 @@ const DisplayStatsStyled = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-bottom: 1px;
+      padding-bottom: 0.5rem;
       border-bottom: 1.5px solid #BBB7C4;
   
       h5 {
@@ -68,7 +69,8 @@ const DisplayStatsStyled = styled.div`
       }
   
       .amount {
-        font-size: 25px;
+        font-size: 28px;
+        font-family: cursive;
         font-weight: 800;
         padding-block: 7px;
         display: flex;
@@ -82,15 +84,17 @@ const DisplayStatsStyled = styled.div`
       width: 100%;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      margin-top: 5px;
+      font-size: medium;
+  
+
       
       .title {
         display: flex;
         justify-content: center;
-        text-decoration: underline;
-        padding-block: 5px;
         font-weight: 700;
+        font-size: x-small;
+        flex: 1;
+        padding-top: 0.1rem;
       }
 
       .stat {
@@ -98,31 +102,34 @@ const DisplayStatsStyled = styled.div`
         display: flex;
         flex-direction: column;
         flex: 1;
+        border: 0.5px solid #000;
 
         .amount {
           display: flex;
           justify-content: center;
           font-weight: 600;
+          padding-block: 0.2rem;
+          flex: 3;
         }
       }
       
       .income-display {
-        
+        background-color: #FFF;
         .amount {
           color: #00B51B;
         }
       }
 
       .expense-display {
-        border-left: 1.5px solid #BBB7C4;
-        border-right: 1.5px solid #BBB7C4;
-        padding-inline: 15px;
+        background-color: #FFF;
+
         .amount {
           color: #E02B2B;
         }
       }
 
       .goal-display {
+        background-color: #FFF;
 
         .amount {
           color: #1B52E0;
@@ -140,7 +147,7 @@ const DisplayStatsStyled = styled.div`
     justify-content: center;
   }
 
-  .monthly-stat-container {
+  .budget-container {
     width: 35%;
     height: 100%;
     display: flex;

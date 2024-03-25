@@ -3,19 +3,23 @@ import styled from 'styled-components'
 import { InnerLayout } from '../../styles/Layout'
 import DisplayStats from './DisplayStats'
 import { useGlobalContext } from '../../context/GlobalContext'
-import History from '../History/History'
+import History from './History'
 import GoalProgress from './GoalProgress'
+import moment from 'moment';
+
 
 function Dashboard() {
 
   const { currentUserName } = useGlobalContext()
+  let currentDate = moment().format('MMMM Do, YYYY');
 
   return (
     <DashboardStyled>
       <InnerLayout>
         <div className="dashboard-container">
           <header className="welcome-box">
-            Hi, {currentUserName}!
+            <b>Hi, {currentUserName}!</b>
+            <p className='date'>{currentDate}</p>
           </header>
           <section className="quick-stats">
             <DisplayStats />
@@ -47,11 +51,16 @@ const DashboardStyled = styled.div`
     gap: 0.5rem;
 
     .welcome-box {
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-      font-size: 25px;
-      padding-bottom: 10px;
       border-bottom: 1.5px solid #BBB7C4;
       flex: 0.3;
+      text-transform: capitalize;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .date{
+        font-size: small;
+      }
     }
 
     .quick-stats {
