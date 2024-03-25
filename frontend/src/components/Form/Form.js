@@ -7,11 +7,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { ButtonStyled, DivStyled } from './FormComponentsStyled';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { plus } from '../../utils/icons';
+import { toast } from 'react-hot-toast';
 
 
 const Form = () => {
 
-    const { currency, addIncome, currentUserId, addExpense, active } = useGlobalContext()
+    const { currency, addIncome, getIncomes, currentUserId, addExpense, getExpenses, active, getUserBalance, getBudgets, availableBalance } = useGlobalContext()
 
     const defaultInput = {
         title: "",
@@ -20,6 +21,12 @@ const Form = () => {
         description: "",
         date: "",
     }
+
+    // Handle Button Click
+    const [buttonClicked, setButtonClicked] = useState(false)
+
+    // Get current date
+    const today = (new Date()).toISOString().substring(0, 10)
 
     const [inputs, setInputs] = useState({
         ...defaultInput
@@ -33,22 +40,65 @@ const Form = () => {
         }))
     };
 
+    const handleAmountChange = (e) => {
+        setInputs((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value.replace(/[^0-9.]/g, '')
+
+        }))
+    };
+
+    // Get float input amount and user balance
+    const amountInput = parseFloat(inputs.amount)
+    const balance = parseFloat(availableBalance)
 
     //Check current active category
-
     const currentCategory = () => {
         switch (active) {
             case 'Income':
                 return {
                     name: 'Income',
                     matchCategory: incomeCategories,
-                    submitTo: () => addIncome({ ...inputs, userId: currentUserId })
+                    submitTo: async () => {
+                        const response = await addIncome({ ...inputs, userId: currentUserId })
+                        if (response.data.error) {
+                            toast.error(response.data.error)
+                        } else {
+                            toast.success(response.data.message)
+                            setInputs({ ...defaultInput });
+                            // // Update user balance
+                            // const newBalance = balance + amountInput
+                            // await updateBalance("income", newBalance);
+                            getUserBalance();
+                            getIncomes();
+                        }
+                    }
                 }
             case 'Expenses':
                 return {
                     name: 'Expense',
                     matchCategory: expenseCategories,
-                    submitTo: () => addExpense({ ...inputs, userId: currentUserId })
+                    submitTo: async () => {
+                        if (amountInput > balance) {
+                            toast.error('Insufficient balance 🥺😔')
+                            return;
+                        } else {
+                            const response = await addExpense({ ...inputs, userId: currentUserId })
+                            if (response.data.error) {
+                                toast.error(response.data.error)
+                            } else {
+                                toast.success(response.data.message)
+                                setInputs({ ...defaultInput });
+                                // Update user balance
+                                // const newBalance = balance - amountInput
+                                // await updateBalance("expense", newBalance);
+                                getBudgets();
+                                getUserBalance();
+                                getExpenses();
+                            }
+
+                        }
+                    }
                 }
             default:
                 return {
@@ -58,16 +108,15 @@ const Form = () => {
                 }
         }
     }
-    // const currentCategory = {
-    //     name: active === 'Income' ? 'Income' : (active === 'Expenses' ? 'Expense' : ''),
-    //     matchCategory: active === 'Income' ? incomeCategories : (active === 'Expenses' ? expenseCategories : ''),
-    //     submitTo: active === 'Income' ? () => addIncome(inputs) : (active === 'Expenses' ? () => addExpense(inputs) : null),
-    // }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         currentCategory().submitTo();
-        setInputs({ ...defaultInput });
+        setButtonClicked(true);
+        setTimeout(() => {
+            setButtonClicked(false);
+        }, 2500);
     }
 
 
@@ -99,7 +148,7 @@ const Form = () => {
                     name="amount"
                     label="Amount"
                     value={inputs.amount}
-                    onChange={handleChange}
+                    onChange={handleAmountChange}
                     type={"text"}
                     size="small"
 
@@ -152,14 +201,14 @@ const Form = () => {
                     onChange={handleChange}
                     label="Date"
                     InputLabelProps={{ shrink: true }}
-                    inputProps={{ style: { fontSize: 14 } }}
+                    inputProps={{ max: `${today}` }}
                     size="small"
                     required
                 />
-                <ButtonStyled>{plus} Add {currentCategory().name}</ButtonStyled>
+                <ButtonStyled disabled={buttonClicked}>{plus} Add {currentCategory().name}</ButtonStyled>
             </DivStyled>
         </Box>
     )
 }
 
-export default Form;
+export default Form
