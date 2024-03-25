@@ -15,8 +15,7 @@ const IncomeSchema = new mongoose.Schema({
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        unique: true
+        ref: 'User'
     },
     category: {
         type: String,

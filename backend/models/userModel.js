@@ -20,12 +20,15 @@ const UserSchema = new mongoose.Schema({
     },
     availableBalance: {
         type: Number,
-        default: 0,
-        trim: true
+        default: 0
     },
     avatarImage: {
-        type: String
+        type: String,
+        default: "",
     },
+    preferredCurrency: {
+        type: String,
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model('User', UserSchema)

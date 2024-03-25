@@ -3,19 +3,20 @@ const UserSchema = require("../models/userModel.js")
 
 
 exports.addIncome = async (req, res) => {
-    const { title, amount, category, description, date, userId } = req.body
-
-    const income = IncomeSchema({
-        title,
-        amount,
-        category,
-        description,
-        date,
-        userId,
-    })
+    const { title, amount, category, description, date } = req.body
+    const { userId } = req.params
 
     try {
         //Validations
+        const income = IncomeSchema({
+            title,
+            amount,
+            category,
+            description,
+            date,
+            userId,
+        })
+
         if (!title || !category || !description || !date) {
             return res.json({
                 error: 'All fields required'
@@ -26,17 +27,23 @@ exports.addIncome = async (req, res) => {
                 error: "Amount must be a positive number"
             })
         }
+
+        // Update balance
+        const user = await UserSchema.findOne({ _id: userId })
+        user.availableBalance = parseFloat(user.availableBalance) + parseFloat(amount)
+        await UserSchema.findByIdAndUpdate(userId, user)
+
         await income.save()
 
         res.json({
             message: 'Income Added Successfully'
         })
     } catch (error) {
+        console.log(error)
         res.json({
             error: 'Server Error'
         })
     }
-    console.log(income)
 }
 
 exports.getIncomes = async (req, res) => {
@@ -56,7 +63,17 @@ exports.getIncomes = async (req, res) => {
 exports.deleteIncome = async (req, res) => {
     const { id } = req.params;
     try {
-        const item = await IncomeSchema.findByIdAndDelete(id)
+        // Get income to be deleted
+        const item = await IncomeSchema.findById(id)
+
+        // Update balance
+        const user = await UserSchema.findOne({ _id: item.userId })
+        user.availableBalance = parseFloat(user.availableBalance) - parseFloat(item.amount)
+        await UserSchema.findByIdAndUpdate(user._id, user)
+
+        // Delete income
+        await IncomeSchema.findByIdAndDelete(id)
+
         res.json({
             amount: item.amount
         })

@@ -6,8 +6,7 @@ const jwt = require('jsonwebtoken');
 // User Registration EndPoint
 exports.registerUser = async (req, res) => {
     try {
-        const { username, password, email, avatarImage } = req.body
-
+        const { username, password, email, currency } = req.body
         // Check is username exists
         if (!username) {
             return res.json({
@@ -30,6 +29,9 @@ exports.registerUser = async (req, res) => {
             })
         }
 
+        // Set currency if empty
+        const setCurrency = currency === "" ? "₦" : currency
+
         // Hash password
         const hashedPassword = await hashPassword(password)
 
@@ -38,7 +40,7 @@ exports.registerUser = async (req, res) => {
             username,
             password: hashedPassword,
             email,
-            avatarImage
+            preferredCurrency: setCurrency
         })
 
         return res.json(newUser)
@@ -107,8 +109,10 @@ exports.loginUser = async (req, res) => {
                 })
             })
         }
-    } catch (error) {
-        console.log(error)
+    } catch {
+        res.json({
+            error: 'Server Error'
+        })
     }
 
 }

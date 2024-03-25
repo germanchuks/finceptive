@@ -4,11 +4,11 @@ const { addExpense, getExpense, deleteExpense } = require('../controllers/expens
 const router = require('express').Router();
 
 
-router.post('/add-income', addIncome)
+router.post('/add-income/:userId', addIncome)
     .get('/get-incomes', getIncomes)
     .delete('/delete-income/:id', deleteIncome)
 
-router.post('/add-expense', addExpense)
+router.post('/add-expense/:userId', addExpense)
     .get('/get-expenses', getExpense)
     .delete('/delete-expense/:id', deleteExpense)
 
