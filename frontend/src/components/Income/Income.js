@@ -4,10 +4,9 @@ import { InnerLayout } from '../../styles/Layout'
 import { useGlobalContext } from '../../context/GlobalContext'
 import Form from '../Form/Form'
 import IncomeItem from './IncomeItem'
-import { AddSuccess } from '../Notification/Notification'
 
 function Income() {
-  const { currency, showSuccess, incomes, getIncomes, getTotalAmount } = useGlobalContext()
+  const { currency, incomes, getTotalAmount } = useGlobalContext()
 
   return (
     <IncomeStyled>
@@ -18,22 +17,26 @@ function Income() {
             <Form />
           </div>
           <div className="incomes">
-            {incomes.map((income) => {
-              const { _id, title, amount, description, category, date } = income;
-              return <IncomeItem
-                id={_id}
-                title={title}
-                amount={amount}
-                description={description}
-                category={category}
-                date={date}
-                key={_id}
-              />
-            })}
+            {
+              !incomes.length &&
+              <div className="empty-income">
+                Add an income
+              </div>
+              ||
+              incomes.map((income) => {
+                const { _id, title, amount, description, category, date } = income;
+                return <IncomeItem
+                  id={_id}
+                  title={title}
+                  amount={amount}
+                  description={description}
+                  category={category}
+                  date={date}
+                  key={_id}
+                  dashboard={false}
+                />
+              })}
           </div>
-          {showSuccess.show && (
-            <AddSuccess message={showSuccess.message} />
-          )}
         </div>
       </InnerLayout>
     </IncomeStyled>
@@ -80,6 +83,14 @@ const IncomeStyled = styled.div`
     overflow-y: scroll;
     height: 83vh;
     padding-inline: 1rem;
+
+    .empty-income {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.3;
+      padding-top: 30%;
+    }
   }
 
   .incomes::-webkit-scrollbar {
@@ -87,4 +98,4 @@ const IncomeStyled = styled.div`
   }
 `
 
-export default Income;
+export default Income

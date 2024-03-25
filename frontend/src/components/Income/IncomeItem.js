@@ -4,20 +4,24 @@ import styled from 'styled-components'
 import { useGlobalContext } from '../../context/GlobalContext';
 import { ButtonStyled } from '../Form/FormComponentsStyled';
 import { incomeCategories } from '../../utils/categoryItems';
-
+import { toast } from 'react-hot-toast';
 
 function IncomeItem({
-    id,
-    title,
-    amount,
-    description,
-    category,
-    date
-}) 
-{  
-  const {currency, deleteIncome} = useGlobalContext()
+  id,
+  title,
+  amount,
+  description,
+  category,
+  date,
+  dashboard
+}) {
 
-  
+  const { currency, deleteIncome, getIncomes, getUserBalance } = useGlobalContext()
+
+
+  // const balance = parseFloat(availableBalance)
+
+  // Check for category icon
   const getCategoryIcon = (category) => {
 
     const matchingCategory = incomeCategories.find(
@@ -26,35 +30,50 @@ function IncomeItem({
     return matchingCategory ? matchingCategory.icon : othersIcon;
 
   };
-  
+
+  // Transaction item size reset on click
   const [clicked, setClicked] = useState(false)
-  
   const handleClick = () => {
     setClicked(!clicked);
   }
 
+  const handleDelete = async () => {
+    const response = await deleteIncome(id);
+    if (response.data.error) {
+      toast.error(response.data.error)
+    } else {
+      // Update user balance
+      // const newBalance = balance - parseFloat(response.data.amount)
+      // await updateBalance("expense", newBalance);
+      getUserBalance();
+      getIncomes();
+      toast.success('Income Deleted')
+    }
+  }
+
   return (
-    <IncomeItemStyled >
+    <IncomeItemStyled>
       <div className="main-content">
         <div className="icon">
           {getCategoryIcon(category)}
         </div>
-        <div className="content">
-            <h5 className="title">{title}</h5>
-            <span className="date">
-              {calender} {date.substring(0, 10)}
-              <span 
+        <div className="info-container">
+          <h5 className="title" >{title}</h5>
+          <span className="date">
+            {calender} {date.substring(0, 10)}
+            {!dashboard &&
+              <span
                 className='open-more'
                 onClick={handleClick}
-                >
-                  {clicked ? 'See less...' : 'See more...'}
-                </span>
-            </span>
+              >
+                {clicked ? 'See less...' : 'See more...'}
+              </span>}
+          </span>
         </div>
         <div className="amount">+ {currency} {amount} </div>
       </div>
       <div className="more-content" style={{
-        display: clicked ? 'flex' : 'none' 
+        display: clicked ? 'flex' : 'none'
       }}>
         <div className="description">
           {note} {description}
@@ -65,7 +84,7 @@ function IncomeItem({
             color: "#FFF",
             borderRadius: "50%",
             padding: "5px",
-          }} onClick={() => deleteIncome(id)}>
+          }} onClick={handleDelete}>
             {deleteBin}
           </ButtonStyled>
         </div>
@@ -104,7 +123,7 @@ const IncomeItemStyled = styled.div`
       flex: 1;
     }
 
-    .content {
+    .info-container {
       display: flex;
       flex-direction: column;
       flex: 8;
@@ -141,6 +160,7 @@ const IncomeItemStyled = styled.div`
       align-items: center;
       justify-content: flex-end;
       font-weight: bold;
+      font-size: medium;
       color: #4caf50;
     }
      
@@ -172,4 +192,4 @@ const IncomeItemStyled = styled.div`
   }
 `;
 
-export default IncomeItem;
+export default IncomeItem
