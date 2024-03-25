@@ -8,10 +8,12 @@ const GlobalStyle = createGlobalStyle`
         list-style: none;
     }
     body {
-        font-family: "Lato", sans-serif;
         color: rgba(255, 255, 255, 1);
         overflow: hidden;
-        font-size: clamp(1rem, 1vw, 1.5rem);
+        font-size: clamp(1.2rem, 1vw, 1.7rem);
+        font-family: Garamond, serif;
+        
+
     }
 `;
 

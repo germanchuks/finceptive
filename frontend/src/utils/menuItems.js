@@ -37,7 +37,7 @@ const menuItems = [
         icon: settings,
         link: '/settings'
     },
-    
+
 ]
 
 export { menuItems };

@@ -39,6 +39,16 @@ import { IoSchoolSharp } from "react-icons/io5";
 import { TbBeach } from "react-icons/tb";
 import { GrEmergency } from "react-icons/gr";
 import { GrStatusGood } from "react-icons/gr";
+import { MdSavings } from "react-icons/md";
+import { CiSearch } from "react-icons/ci";
+import { BiRename } from "react-icons/bi";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { RxAvatar } from "react-icons/rx";
+import { BsCurrencyExchange } from "react-icons/bs";
+import { GrPowerReset } from "react-icons/gr";
+import { BiMoneyWithdraw } from "react-icons/bi";
+import { TbBusinessplan } from "react-icons/tb";
+import { TiArrowBack } from "react-icons/ti";
 
 
 export const homeIcon = <IoIosHome size={25} />
@@ -54,6 +64,7 @@ export const deleteBin = <MdDeleteForever size={20} />
 export const note = <FaRegCommentDots />
 export const plus = <GrAdd />
 export const goodIcon = <GrStatusGood />
+export const searchIcon = <CiSearch />
 
 //Income category icons
 export const giftIcon = <ImGift size={25} />
@@ -89,3 +100,16 @@ export const kidsIcon = <FaChildren size={25} />
 export const educationIcon = <IoSchoolSharp size={25} />
 export const vacationIcon = <TbBeach size={25} />
 export const emergencyIcon = <GrEmergency size={25} />
+
+// Goals saving and withdrawal Icon
+export const savingIcon = <MdSavings size={25} />
+export const withdrawIcon = <BiMoneyWithdraw size={25} />
+
+// Settings Icons
+export const displayNameIcon = <BiRename size={25} />;
+export const passwordIcon = <RiLockPasswordFill size={25} />;
+export const displayPictureIcon = <RxAvatar size={25} />;
+export const displayCurrencyIcon = <BsCurrencyExchange size={25} />;
+export const resetAccountIcon = <GrPowerReset size={25} />;
+export const budgetIcon = <TbBusinessplan size={25} />
+export const returnIcon = <TiArrowBack size={25} />
