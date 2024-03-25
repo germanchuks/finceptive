@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import GoalItem from '../Goal/GoalItem';
 import { useGlobalContext } from '../../context/GlobalContext';
 import ProgressBar from "@ramonak/react-progress-bar";
 
@@ -12,18 +11,18 @@ function GoalProgress() {
 
     return (
         <GoalProgressStyled>
-            <h3>Goal progress</h3>
-            {!goalHistory.length &&
+            <h5>Goal progress</h5>
+            {(!goalHistory.length &&
                 <div className="empty-goal">
                     <span>Create a new goal</span>
-                </div>
+                </div>)
                 ||
 
                 goalHistory.slice(0, 3).map((transaction) => {
                     const { _id, title, targetAmount, currentAmount } = transaction
                     return (
                         <div className="bar-container" key={_id}>
-                            <h4>{title}</h4>
+                            <h6>{title}</h6>
                             <ProgressBar
                                 completed={((currentAmount / targetAmount) * 100).toFixed(0)}
                                 maxCompleted={100}
@@ -49,7 +48,7 @@ const GoalProgressStyled = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.2rem;
 
     .empty-goal {
         display: flex;
@@ -58,11 +57,14 @@ const GoalProgressStyled = styled.div`
         opacity: 0.5;
         width: 100%;
         flex: 1;
+        font-size: medium;
     }
     .bar-container {
         display: flex;
         gap: 1.5rem;
         align-items: center;
+        padding: 0.5rem;
+        background-color: #CECBD6;
 
         .progress-bar {
             width: 100%;
