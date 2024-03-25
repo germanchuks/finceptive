@@ -4,10 +4,10 @@ import { InnerLayout } from '../../styles/Layout'
 import { useGlobalContext } from '../../context/GlobalContext'
 import Form from '../Form/Form'
 import ExpenseItem from './ExpenseItem'
-import { AddSuccess } from '../Notification/Notification'
+
 
 function Expense() {
-  const { currency, showSuccess, expenses, getExpenses, getTotalAmount } = useGlobalContext()
+  const { currency, expenses, getExpenses, getTotalAmount } = useGlobalContext()
 
   return (
     <ExpenseStyled>
@@ -18,23 +18,27 @@ function Expense() {
             <Form />
           </div>
           <div className="expenses">
-            {expenses.map((expense) => {
-              const { _id, title, amount, description, type, category, date } = expense;
-              return <ExpenseItem
-                id={_id}
-                title={title}
-                amount={amount}
-                description={description}
-                type={type}
-                category={category}
-                date={date}
-                key={_id}
-              />
-            })}
+            {
+              !expenses.length &&
+              <div className="empty-expense">
+                Add an expense
+              </div>
+              ||
+              expenses.map((expense) => {
+                const { _id, title, amount, description, type, category, date } = expense;
+                return <ExpenseItem
+                  id={_id}
+                  title={title}
+                  amount={amount}
+                  description={description}
+                  type={type}
+                  category={category}
+                  date={date}
+                  key={_id}
+                  dashboard={false}
+                />
+              })}
           </div>
-          {showSuccess.show && (
-            <AddSuccess message={showSuccess.message} />
-          )}
         </div>
       </InnerLayout>
     </ExpenseStyled>
@@ -81,6 +85,15 @@ const ExpenseStyled = styled.div`
     overflow-y: scroll;
     height: 83vh;
     padding-inline: 1rem;
+
+    .empty-expense {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.3;
+      padding-top: 30%;
+      
+    }
   }
 
   .expenses::-webkit-scrollbar {
@@ -88,4 +101,4 @@ const ExpenseStyled = styled.div`
   }
 `
 
-export default Expense;
+export default Expense
