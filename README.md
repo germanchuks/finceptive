@@ -5,11 +5,11 @@ Finceptive is a user-friendly financial management application designed to empow
 
 ## Technologies 🚀
 
-- **Frontend:** React, Redux
+- **Frontend:** React
 - **Backend:** Express.js, Node.js, MongoDB
 - **Authentication/Authorization:** JWT, OAuth
 - **Deployment:** Render (Backend), Vercel (Frontend)
-- **Testing:** Jest, Cypress
+- **Testing:** Jest
 
 ## Features 🌟
 
@@ -44,5 +44,6 @@ The MERN stack (MongoDB, Express.js, React, Node.js) is chosen for its flexibili
 
 ## Authors 👥
 
-Michael Chukwunwe - [Github](https://github.com/stuckwithprogression) 
+Michael Chukwunwe - [Github](https://github.com/stuckwithprogression)
+
 Daniel German - [Github](https://github.com/germanchuks)

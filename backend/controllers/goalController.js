@@ -1,4 +1,6 @@
 const GoalSchema = require("../models/goalModel.js")
+const WithdrawalSchema = require("../models/withdrawalModel.js")
+const UserSchema = require("../models/userModel")
 
 exports.addGoal = async (req, res) => {
     const { title, targetAmount, category, userId, description, targetDate } = req.body;
@@ -14,7 +16,6 @@ exports.addGoal = async (req, res) => {
 
     try {
         //Validations
-        console.log('validation')
         if (!title || !targetAmount || !category || !targetDate) {
             return res.json({
                 error: 'All fields required'
@@ -35,7 +36,6 @@ exports.addGoal = async (req, res) => {
             error: 'Server Error'
         })
     }
-    console.log(goal)
 }
 
 exports.getGoals = async (req, res) => {
@@ -52,32 +52,46 @@ exports.getGoals = async (req, res) => {
     }
 }
 
-exports.updateGoal = async (req, res) => {
-    const { id } = req.params;
-    const update = { ...req.body }
-    try {
-        const updatedGoal = await GoalSchema.findByIdAndUpdate(id, update, { new: true })
-        res.json({
-            message: 'Goal Updated Successfully'
-        })
-        console.log(updatedGoal)
-    } catch (error) {
-        res.json({
-            error: 'Server error'
-        })
-    }
-}
-
 exports.deleteGoal = async (req, res) => {
+    const { completed } = req.query;
     const { id } = req.params;
     try {
+        // Find goal to be deleted
+        const goal = await GoalSchema.findById(id)
+
+        // Get current amount and related userId
+        const { currentAmount, title, userId } = goal
+
+        // Add to withdrawals
+        if (currentAmount != 0) {
+            const withdrawal = new WithdrawalSchema({
+                amount: currentAmount,
+                goalId: id,
+                userId,
+                title,
+                completed
+            })
+            await withdrawal.save()
+        }
+
+        // Add saved amount to available balance if target was not met
+        if (completed === 'false') {
+            // Update balance
+            const user = await UserSchema.findOne({ _id: userId })
+            user.availableBalance = parseFloat(user.availableBalance) + parseFloat(currentAmount)
+            await UserSchema.findByIdAndUpdate(user._id, user)
+
+        }
+
+        // Delete goal
         const item = await GoalSchema.findByIdAndDelete(id)
+
         res.json({
             amount: item.currentAmount
         })
     } catch (error) {
         res.json({
-            error: 'Server Error'
+            error: error
         })
     }
 }
