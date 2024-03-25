@@ -25,9 +25,6 @@ Finceptive is a user-friendly financial management application designed to empow
 - Individuals seeking an efficient way to manage personal finances
 - Small businesses aiming to optimize their financial operations
 
-## Testing 🧪
-
-- **Jest & Cypress:** Ensuring a seamless experience with thorough unit and integration tests.
 
 ## Differentiation & Innovation 🌟
 
