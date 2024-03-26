@@ -17,17 +17,14 @@ function Transaction() {
     const { amount, date } = transaction;
     const { minAmount, maxAmount, minDate, maxDate } = filter || {};
 
-    // const trDate = `${date}`.toString().substring(0, 10);
-
     const trDate = new Date(date);
 
     // Conditional checks based on payload properties
     let amountInRange = true; // Assume all transactions are in range initially
     let dateInRange = true;
 
-    // const startDate = new Date(minDate);
-    // const endDate = new Date(maxDate);
 
+    // Test filter conditions are met
     if (minAmount !== '') {
       amountInRange = amount >= minAmount;
     }
