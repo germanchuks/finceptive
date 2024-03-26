@@ -32,7 +32,6 @@ const DepositItemStyled = styled.div`
 background: #FFF;
   border: 1px solid #000;
   padding: 0.5rem;
-  margin-block: 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;

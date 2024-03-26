@@ -6,7 +6,7 @@ export const DivStyled = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-  height: auto;
+  height: 100%;
   border-radius: 10px;
   font-size: smaller;
   padding: 1.5rem;

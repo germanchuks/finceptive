@@ -84,6 +84,7 @@ const HistoryStyled = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
     
     .empty-transaction {
         display: flex;
@@ -98,11 +99,6 @@ const HistoryStyled = styled.div`
     &::-webkit-scrollbar {
     display: none;
     }
-
-    .transaction-item {
-        height: 70px;
-    }
-
 `;
 
 export default History

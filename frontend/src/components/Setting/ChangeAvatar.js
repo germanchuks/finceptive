@@ -76,7 +76,7 @@ function ChangeAvatar() {
         <ChangeAvatarStyled
             onSubmit={handleSubmit}
         >
-            <h5>Select Avatar</h5>
+            <h5>Change Display Picture</h5>
             <DivStyled>
                 <br />
                 <div className='avatar-container'>
@@ -89,7 +89,7 @@ function ChangeAvatar() {
                             <Avatar
                                 alt={item.alt}
                                 src={item.link}
-                                sx={{ width: 56, height: 56 }}
+                                sx={{ width: '2.5rem', height: '2.5rem' }}
                             />
                         </div>
                     })}
@@ -114,13 +114,15 @@ const ChangeAvatarStyled = styled.form`
     }
     
     .avatar-container {
-        display: flex;
+        display: grid;
+        grid-template-columns: auto auto auto;
         gap: 1rem;
         justify-content: space-evenly;
         padding-block: 1rem;
         box-sizing: border-box;
     }
     .avatars {
+        display: flex;
         transition: all .2s ease-out;
         border-radius: 50%;
         padding: 0.5rem;

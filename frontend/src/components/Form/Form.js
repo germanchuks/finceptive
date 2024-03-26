@@ -66,9 +66,7 @@ const Form = () => {
                         } else {
                             toast.success(response.data.message)
                             setInputs({ ...defaultInput });
-                            // // Update user balance
-                            // const newBalance = balance + amountInput
-                            // await updateBalance("income", newBalance);
+                            // Update user balance
                             getUserBalance();
                             getIncomes();
                         }

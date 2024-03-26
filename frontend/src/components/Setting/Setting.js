@@ -7,10 +7,14 @@ import ResetAccount from './ResetAccount';
 import ChangeCurrency from './ChangeCurrency';
 import SetBudget from './SetBudget';
 import { settingsOptions } from '../../utils/settingOptions';
+import { useMediaQuery } from "react-responsive";
+
 
 function Setting() {
 
-  const [optionClicked, setOptionClicked] = useState('')
+  const [optionClicked, setOptionClicked] = useState('budget')
+
+  const isMobile = useMediaQuery({ minWidth: 750 });
 
   const showSetup = () => {
     switch (optionClicked) {
@@ -33,6 +37,7 @@ function Setting() {
 
   return (
     <SettingStyled>
+
       <div className="options-box">
         <h4>Options</h4>
         <ul className="options">
@@ -43,7 +48,10 @@ function Setting() {
               }}
               className={optionClicked === option.id ? 'activeOption' : ''}>
               <span className="option-icon">{option.icon}</span>
-              <span>{option.title}</span>
+              {
+                isMobile &&
+                <span>{option.title}</span>
+              }
             </li>
           })}
         </ul>
@@ -60,7 +68,8 @@ const SettingStyled = styled.div`
   display: flex;
   padding: 1rem;
   gap: 1rem;
-  height: 87vh;
+  height: 100%;
+  padding-bottom: 3.5rem;
 
   .options-box {
     width: 40%;
@@ -117,7 +126,34 @@ const SettingStyled = styled.div`
     display: flex;
     flex: 1;
     border-radius: 20px;
+    height: fit-content;
 
+  }
+
+  @media (max-width: 750px) {
+    padding-inline: 0;
+    padding-block: 0.5rem 3rem;
+    gap: 1rem;
+
+    .options-box {
+      width: 15%;
+      align-items: center;
+      padding: 0;
+      padding-top: 0.5rem;
+      border-radius: 0;
+
+      .options {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        li {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
   }
 
 `

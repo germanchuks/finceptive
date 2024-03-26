@@ -1,76 +1,82 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { InnerLayout } from '../../styles/Layout'
 import { useGlobalContext } from '../../context/GlobalContext'
 import FormGoal from '../Form/FormGoal'
 import GoalItem from './GoalItem'
+import { dropIcon, hideIcon } from '../../utils/icons';
+import { useMediaQuery } from "react-responsive";
 
 function Goal() {
 
   const { currency, goals, getTotalAmount } = useGlobalContext()
 
+  // Toggle form on small screen size
+  const isMobile = useMediaQuery({ maxWidth: 750 });
+
+  const [formOpen, setFormOpen] = useState(true)
+
+  useEffect(() => {
+    if (!isMobile) {
+      setFormOpen(true)
+    }
+  }, [isMobile])
+
   return (
     <GoalStyled>
       <InnerLayout>
-        <div className="goal-container">
-          <div className="form">
-            <div className="total-goal"><h6>Total Saved:</h6> {currency} {getTotalAmount(goals)}</div>
-            <FormGoal />
-          </div>
-          <div className="goals">
-            {(!goals.length &&
-              <div className="empty-goal">
-                Create a new goal
-              </div>)
-              ||
-              goals.map((goal) => {
-                const { _id, title, targetAmount, description, category, targetDate, currentAmount, createdAt } = goal;
-                return <GoalItem
-                  id={_id}
-                  title={title}
-                  targetAmount={targetAmount}
-                  currentAmount={currentAmount}
-                  description={description}
-                  category={category}
-                  targetDate={targetDate}
-                  createdAt={createdAt}
-                  key={_id}
-                  dashboard={false}
-                />
-              })}
-          </div>
-
+        <div className={formOpen ? "form" : "form-close"}>
+          <div className="total-goal"><h6>Total Saved:</h6> {currency} {getTotalAmount(goals)}</div>
+          <FormGoal />
         </div>
+        <div className="goals">
+          <div className="goals-header">
+            <h4>All Goals</h4>
+            {
+              isMobile &&
+              <div className="toggle-form" onClick={() => setFormOpen(!formOpen)}>
+                {formOpen ? hideIcon : dropIcon} <small>{formOpen ? 'Hide form' : 'Show form'}</small>
+              </div>
+            }
+          </div>
+          {(!goals.length &&
+            <div className="empty-goal">
+              Create a new goal
+            </div>)
+            ||
+            goals.map((goal) => {
+              const { _id, title, targetAmount, description, category, targetDate, currentAmount, createdAt } = goal;
+              return <GoalItem
+                id={_id}
+                title={title}
+                targetAmount={targetAmount}
+                currentAmount={currentAmount}
+                description={description}
+                category={category}
+                targetDate={targetDate}
+                createdAt={createdAt}
+                key={_id}
+                dashboard={false}
+              />
+            })}
+        </div>
+
       </InnerLayout>
     </GoalStyled>
   )
 }
 
 const GoalStyled = styled.div`
-  overflow: auto;
-  display: flex;
 
-
-  .goal-container {
-    display: flex;
-    gap: 2.5rem;
-    position: relative;
-
-  }
-  
   .form {
-    display: flex;
-    flex-direction: column;
-    gap: rem;
-    height: 80%;
-    width: 35%;
+    width: 40%;
     
     .total-goal {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px;
-      margin-block: 15px;
+      margin-bottom: 0.8rem;
       border-radius: 10px;
       background-color: #4A5CFF;
       font-size: larger;
@@ -84,24 +90,71 @@ const GoalStyled = styled.div`
 
   .goals { 
     flex: 1;
-    overflow-y: scroll;
-    height: 83vh;
-    padding-inline: 1rem;
     display: flex;
     flex-direction: column;
-
+    gap: 1rem;
+    
     .empty-goal {
       display: flex;
-      align-items: center;
       justify-content: center;
-      opacity: 0.3;
+      align-items: center;
+      opacity: 0.5;
+      width: 100%;
+      flex: 1;
+      font-size: medium;
       padding-top: 30%;
     }
+
   }
 
-  .goals::-webkit-scrollbar {
-    display: none;
-  }
+  /* Small Screen */
+  @media (max-width: 750px) {
+    position: relative;
+  
+    .form {
+      
+      opacity: 1;
+      height: auto;
+      width: 100%;
+      
+    }
+
+    .form-close {
+      transition: all 3s linear;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .toggle-form {
+      display: flex;
+      align-items: center;
+    }
+    
+    .goals { 
+      width: 100%;
+
+      .goals-header {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .empty-goal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.5;
+        width: 100%;
+        flex: 1;
+        font-size: medium;
+        padding-top: 30%;
+      }
+
+    }
+  }  
+
 `
 
 export default Goal
