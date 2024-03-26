@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { InnerLayout } from '../../styles/Layout'
 import { useGlobalContext } from '../../context/GlobalContext'
@@ -7,7 +7,7 @@ import ExpenseItem from './ExpenseItem'
 
 
 function Expense() {
-  const { currency, expenses, getExpenses, getTotalAmount } = useGlobalContext()
+  const { currency, expenses, getTotalAmount } = useGlobalContext()
 
   return (
     <ExpenseStyled>
@@ -19,10 +19,10 @@ function Expense() {
           </div>
           <div className="expenses">
             {
-              !expenses.length &&
-              <div className="empty-expense">
-                Add an expense
-              </div>
+              (!expenses.length &&
+                <div className="empty-expense">
+                  Add an expense
+                </div>)
               ||
               expenses.map((expense) => {
                 const { _id, title, amount, description, type, category, date } = expense;

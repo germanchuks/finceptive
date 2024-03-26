@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { InnerLayout } from '../../styles/Layout'
 import { useGlobalContext } from '../../context/GlobalContext'
@@ -18,10 +18,10 @@ function Income() {
           </div>
           <div className="incomes">
             {
-              !incomes.length &&
-              <div className="empty-income">
-                Add an income
-              </div>
+              (!incomes.length &&
+                <div className="empty-income">
+                  Add an income
+                </div>)
               ||
               incomes.map((income) => {
                 const { _id, title, amount, description, category, date } = income;
