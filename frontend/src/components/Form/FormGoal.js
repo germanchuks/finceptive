@@ -12,7 +12,7 @@ import { toast } from 'react-hot-toast';
 
 const FormGoal = () => {
 
-    const { currency, currentUserId, active, addGoal, getGoals } = useGlobalContext()
+    const { currency, currentUserId, addGoal, getGoals } = useGlobalContext()
 
     const defaultInput = {
         title: "",
