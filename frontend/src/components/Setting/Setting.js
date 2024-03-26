@@ -10,50 +10,50 @@ import { settingsOptions } from '../../utils/settingOptions';
 
 function Setting() {
 
-    const [optionClicked, setOptionClicked] = useState('')
+  const [optionClicked, setOptionClicked] = useState('')
 
-    const showSetup = () => {
-        switch (optionClicked) {
-            case 'budget':
-                return <SetBudget />
-            case 'username':
-                return <SetDisplayName />
-            case 'password':
-                return <ChangePassword />
-            case 'avatar':
-                return <ChangeAvatar />
-            case 'currency':
-                return <ChangeCurrency />
-            case 'reset':
-                return <ResetAccount />
-            default:
-                return;
-        }
+  const showSetup = () => {
+    switch (optionClicked) {
+      case 'budget':
+        return <SetBudget />
+      case 'username':
+        return <SetDisplayName />
+      case 'password':
+        return <ChangePassword />
+      case 'avatar':
+        return <ChangeAvatar />
+      case 'currency':
+        return <ChangeCurrency />
+      case 'reset':
+        return <ResetAccount />
+      default:
+        return;
     }
+  }
 
-    return (
-        <SettingStyled>
-            <div className="options-box">
-                <h4>Options</h4>
-                <ul className="options">
-                    {settingsOptions.map((option) => {
-                        return <li key={option.id}
-                            onClick={() => {
-                                setOptionClicked(option.id)
-                            }}
-                            className={optionClicked === option.id ? 'activeOption' : ''}>
-                            <span className="option-icon">{option.icon}</span>
-                            <span>{option.title}</span>
-                        </li>
-                    })}
-                </ul>
-            </div>
+  return (
+    <SettingStyled>
+      <div className="options-box">
+        <h4>Options</h4>
+        <ul className="options">
+          {settingsOptions.map((option) => {
+            return <li key={option.id}
+              onClick={() => {
+                setOptionClicked(option.id)
+              }}
+              className={optionClicked === option.id ? 'activeOption' : ''}>
+              <span className="option-icon">{option.icon}</span>
+              <span>{option.title}</span>
+            </li>
+          })}
+        </ul>
+      </div>
 
-            <div className="setup-box">
-                {showSetup()}
-            </div>
-        </SettingStyled>
-    )
+      <div className="setup-box">
+        {showSetup()}
+      </div>
+    </SettingStyled>
+  )
 }
 
 const SettingStyled = styled.div`

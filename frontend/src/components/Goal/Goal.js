@@ -1,53 +1,57 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { InnerLayout } from '../../styles/Layout'
 import { useGlobalContext } from '../../context/GlobalContext'
-import Form from '../Form/Form'
-import IncomeItem from './IncomeItem'
+import FormGoal from '../Form/FormGoal'
+import GoalItem from './GoalItem'
 
-function Income() {
-  const { currency, incomes, getTotalAmount } = useGlobalContext()
+function Goal() {
+
+  const { currency, goals, getTotalAmount } = useGlobalContext()
 
   return (
-    <IncomeStyled>
+    <GoalStyled>
       <InnerLayout>
-        <div className="income-container">
+        <div className="goal-container">
           <div className="form">
-            <div className="total-income"><h6>Total Income:</h6> {currency} {getTotalAmount(incomes)}</div>
-            <Form />
+            <div className="total-goal"><h6>Total Saved:</h6> {currency} {getTotalAmount(goals)}</div>
+            <FormGoal />
           </div>
-          <div className="incomes">
-            {
-              !incomes.length &&
-              <div className="empty-income">
-                Add an income
-              </div>
+          <div className="goals">
+            {(!goals.length &&
+              <div className="empty-goal">
+                Create a new goal
+              </div>)
               ||
-              incomes.map((income) => {
-                const { _id, title, amount, description, category, date } = income;
-                return <IncomeItem
+              goals.map((goal) => {
+                const { _id, title, targetAmount, description, category, targetDate, currentAmount, createdAt } = goal;
+                return <GoalItem
                   id={_id}
                   title={title}
-                  amount={amount}
+                  targetAmount={targetAmount}
+                  currentAmount={currentAmount}
                   description={description}
                   category={category}
-                  date={date}
+                  targetDate={targetDate}
+                  createdAt={createdAt}
                   key={_id}
                   dashboard={false}
                 />
               })}
           </div>
+
         </div>
       </InnerLayout>
-    </IncomeStyled>
+    </GoalStyled>
   )
 }
 
-const IncomeStyled = styled.div`
+const GoalStyled = styled.div`
   overflow: auto;
   display: flex;
 
-  .income-container {
+
+  .goal-container {
     display: flex;
     gap: 2.5rem;
     position: relative;
@@ -61,14 +65,14 @@ const IncomeStyled = styled.div`
     height: 80%;
     width: 35%;
     
-    .total-income {
+    .total-goal {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px;
       margin-block: 15px;
       border-radius: 10px;
-      background-color: #4caf50;
+      background-color: #4A5CFF;
       font-size: larger;
       color: #FFF;
       font-weight: bold;
@@ -78,24 +82,26 @@ const IncomeStyled = styled.div`
     }
   }
 
-  .incomes { 
+  .goals { 
     flex: 1;
     overflow-y: scroll;
     height: 83vh;
     padding-inline: 1rem;
+    display: flex;
+    flex-direction: column;
 
-    .empty-income {
+    .empty-goal {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       opacity: 0.3;
       padding-top: 30%;
     }
   }
 
-  .incomes::-webkit-scrollbar {
+  .goals::-webkit-scrollbar {
     display: none;
   }
 `
 
-export default Income
+export default Goal

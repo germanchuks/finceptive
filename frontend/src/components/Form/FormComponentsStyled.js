@@ -4,13 +4,13 @@ export const DivStyled = styled.div`
   background-color: #FFF;
   display: flex;
   flex-direction: column;
-  padding: 20px;
   gap: 1rem;
   width: 100%;
   height: auto;
   border-radius: 10px;
   font-size: smaller;
-  border: 1.5px solid #3D2B31;
+  padding: 1.5rem;
+  border: 0.5px solid #000;
 `
 
 export const LabelStyled = styled.label`
@@ -44,12 +44,4 @@ export const ButtonStyled = styled.button`
   &:hover {
     background-color: #7F94B5;
   }
-`
-
-export const AlertStyled = styled.div`
-  padding: 10px;
-  background-color: #f44336;
-  color: white;
-  margin-top: 10px;
-  border-radius: 5px;
 `
