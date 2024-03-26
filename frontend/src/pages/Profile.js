@@ -144,9 +144,10 @@ function Profile() {
 
     return (
         <ProfileStyled>
-            <Header />
+            <Header showAlert={showAlert} setShowAlert={setShowAlert} />
             <MainLayout>
                 <NavigationMenu active={active} setActive={setActive} showAlert={showAlert} setShowAlert={setShowAlert} />
+
                 <div className="content">
                     {showData()}
                 </div>
@@ -157,21 +158,20 @@ function Profile() {
 }
 
 const ProfileStyled = styled.div`
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
     width: 100%;
+    height: 100%;
     position: relative;
 
     .content {
         flex: 1;
         background-color: #F2F5FF;
         color: black !important;
-        height: 100%;
         overflow-x: hidden;
         &::-webkit-scrollbar{
-        width: 0;
         }
     }
 

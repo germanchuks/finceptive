@@ -387,7 +387,7 @@ const GoalItemStyled = styled.div`
   background: #FFF;
   border: 1px solid #000;
   padding-block: 1.5rem;
-  margin: 1rem 0 2.5rem 0;
+  margin: 1rem 0 1rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -600,7 +600,10 @@ const GoalItemStyled = styled.div`
       padding: 0.3rem;
     }
   }
-
+  
+  @media (max-width: 430px) {
+    font-size: 80% !important;
+  }
 `;
 
 export default GoalItem

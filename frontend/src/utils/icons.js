@@ -49,6 +49,11 @@ import { GrPowerReset } from "react-icons/gr";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { TbBusinessplan } from "react-icons/tb";
 import { TiArrowBack } from "react-icons/ti";
+import { RiMenuUnfoldFill } from "react-icons/ri";
+import { CiMenuKebab } from "react-icons/ci";
+import { IoIosExit } from "react-icons/io";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { IoMdArrowDropup } from "react-icons/io";
 
 
 export const homeIcon = <IoIosHome size={25} />
@@ -65,6 +70,9 @@ export const note = <FaRegCommentDots />
 export const plus = <GrAdd />
 export const goodIcon = <GrStatusGood />
 export const searchIcon = <CiSearch />
+export const menuIcon = <RiMenuUnfoldFill size={35} />
+export const moreIcon = <CiMenuKebab size={25} />
+export const exitIcon = <IoIosExit />
 
 //Income category icons
 export const giftIcon = <ImGift size={25} />
@@ -113,3 +121,7 @@ export const displayCurrencyIcon = <BsCurrencyExchange size={25} />;
 export const resetAccountIcon = <GrPowerReset size={25} />;
 export const budgetIcon = <TbBusinessplan size={25} />
 export const returnIcon = <TiArrowBack size={25} />
+
+// OTher icons
+export const dropIcon = <IoMdArrowDropdown />;
+export const hideIcon = <IoMdArrowDropup />;

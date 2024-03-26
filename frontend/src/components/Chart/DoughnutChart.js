@@ -47,9 +47,15 @@ const DoughnutChart = () => {
 }
 
 const ChartStyled = styled.div`
-	width: 150px;
-	height: 150px;
+	@media (min-width: 750px) {
+		height: 150px;
+		width: 150px;
+	}
+	@media (max-width: 750px) {
+		width: 145px;
+		height: 145px;
 
+	}
 `;
 
 export default DoughnutChart

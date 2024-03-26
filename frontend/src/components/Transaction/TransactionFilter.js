@@ -142,26 +142,9 @@ const TransactionFilter = () => {
                         }}
                     />
                 </div>
-                {/* <TextField
-                    name="date"
-                    value={inputs.date}
-                    type={"date"}
-                    onChange={handleChange}
-                    label="Date"
-                    defaultValue={today}
-                    InputLabelProps={{ shrink: true }}
-                    inputProps={{ style: { fontSize: 14 } }}
-                    size="small"
-                    required
-                /> */}
 
                 <ButtonStyled disabled={filterClicked}>{searchIcon} Search</ButtonStyled>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: '8rem',
-                }}>
+                <div className='clear-filter'>
                     <ButtonStyled onClick={handleShowAll}>Clear Filter</ButtonStyled>
 
                 </div>
@@ -186,6 +169,24 @@ const FilterStyled = styled.div`
         display: flex;
         gap: 1rem;
         
+    }
+
+    .clear-filter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media (min-width: 750px) {
+        .clear-filter {
+            margin-top: 8rem;
+        }
+    }
+
+    @media (max-width: 750px) {
+        .clear-filter {
+            margin-top: 1rem;
+        }
     }
 
     `

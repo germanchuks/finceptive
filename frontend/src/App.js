@@ -59,4 +59,3 @@ const AppStyled = styled.div`
 `
 
 export default App;
-

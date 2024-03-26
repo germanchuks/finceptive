@@ -97,7 +97,6 @@ const ExpenseItemStyled = styled.div`
   background: #FFF;
   border: 1px solid #000;
   padding: 0.5rem;
-  margin-block: 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -116,18 +115,19 @@ const ExpenseItemStyled = styled.div`
   .main-content {
     display: flex;
     width: 100%;
+    gap: 0.3rem;
     justify-content: space-evenly;
     padding-inline: 10px;
 
     .icon {
-      flex: 1;
+      width: 7%;
     }
 
     .info-container {
       display: flex;
       flex-direction: column;
-      flex: 8;
       gap: 0.2rem;
+      width: 68%;
 
       .title {
         font-weight: bolder;
@@ -155,13 +155,13 @@ const ExpenseItemStyled = styled.div`
     }
 
     .amount {
-      flex: 2;
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       font-weight: bold;
-      color: #E03D45;
       font-size: medium;
+      color: #E03D45;
     }
      
   }
