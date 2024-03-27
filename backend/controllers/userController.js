@@ -371,7 +371,6 @@ exports.resetAccount = async (req, res) => {
             message: "Account reset complete."
         })
 
-
     } catch (error) {
         res.json({
             error: "Reset unsuccessful. Try again later!"
