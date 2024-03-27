@@ -8,16 +8,14 @@ require('dotenv').config()
 
 const PORT = process.env.PORT
 
-// MIDDLEWARES
+//middlewares
 app.use(express.json())
 
-// Allow cookies
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 
-// Map and use all available routes
+//routes
 readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))
-
 
 const server = () => {
     db()
