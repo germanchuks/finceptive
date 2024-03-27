@@ -10,7 +10,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useGlobalContext } from './context/GlobalContext';
 
-axios.defaults.baseURL = "http://localhost:5000/api/v1/";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
 
 
