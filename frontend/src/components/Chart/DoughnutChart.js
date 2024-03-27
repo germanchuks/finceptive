@@ -9,41 +9,41 @@ ChartJS.register(ArcElement, Title);
 
 const DoughnutChart = () => {
 
-    const { getTotalAmount, incomes, expenses, goals } = useGlobalContext()
+	const { getTotalAmount, incomes, expenses, goals } = useGlobalContext()
 
-    const totalIncome = getTotalAmount(incomes);
-    const totalExpense = getTotalAmount(expenses);
-    const totalSavedGoal = getTotalAmount(goals);
+	const totalIncome = getTotalAmount(incomes);
+	const totalExpense = getTotalAmount(expenses);
+	const totalSavedGoal = getTotalAmount(goals);
 
-    const data = {
-        labels: ['Income', 'Expense', 'Goal'],
-        datasets: [
-            {
-                data: [totalIncome, totalExpense, totalSavedGoal],
-                backgroundColor: ['#2ECC71', '#E74C3C', '#3BA0FF'],
-                hoverBackgroundColor: ['#27AE60', '#C0392B', '#2F80CC'],
-                cutout: '70%'
-            },
-        ],
-    };
+	const data = {
+		labels: ['Income', 'Expense', 'Goal'],
+		datasets: [
+			{
+				data: [totalIncome, totalExpense, totalSavedGoal],
+				backgroundColor: ['#2ECC71', '#E74C3C', '#3BA0FF'],
+				hoverBackgroundColor: ['#27AE60', '#C0392B', '#2F80CC'],
+				cutout: '70%'
+			},
+		],
+	};
 
-    const options = {
-        plugins: {
-            legend: {
-                display: false
-            }
-        }
-    }
+	const options = {
+		plugins: {
+			legend: {
+				display: false
+			}
+		}
+	}
 
-    return (
-        <ChartStyled>
-            <Doughnut
-                data={data}
-                options={options}
+	return (
+		<ChartStyled>
+			<Doughnut
+				data={data}
+				options={options}
 
-            />
-        </ChartStyled>
-    )
+			/>
+		</ChartStyled>
+	)
 }
 
 const ChartStyled = styled.div`

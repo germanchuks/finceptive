@@ -150,4 +150,7 @@ const NavStyled = styled.nav`
       border-radius: 50%;
     }
   }
+  
+
 `;
+

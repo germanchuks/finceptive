@@ -35,6 +35,7 @@ function GoalProgress() {
                                 borderRadius='15px'
                                 animateOnRender={true}
                             />
+
                         </div>
                     )
                 })

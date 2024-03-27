@@ -13,6 +13,10 @@ const MainLayout = styled.div`
     @media (min-width: 750px) {
         flex-direction: row
     }
+
+    /* display: flex;
+    height: 100vh;
+    width: 1280px; */
 `
 
 const InnerLayout = styled.div`

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function Button({ name, icon, bg, padd, onClick, color, bdRad }) {
+function Button({name, icon, bg, padd, onClick, color, bdRad}) {
     return (
         <ButtonStyled style={{
             background: bg,
