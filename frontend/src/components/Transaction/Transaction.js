@@ -17,7 +17,7 @@ function Transaction() {
   // Toggle filter on small screen size
   const isMobile = useMediaQuery({ maxWidth: 750 });
 
-  const [filterOpen, setFilterOpen] = useState(true)
+  const [filterOpen, setFilterOpen] = useState(false)
 
   useEffect(() => {
     if (!isMobile) {
@@ -79,7 +79,7 @@ function Transaction() {
   return (
     <TransactionStyled>
       <InnerLayout>
-        <div className={filterOpen ? "filter" : "filter-close"}>
+        <div className={(filterOpen || !isMobile) ? "filter" : "filter-close"}>
           <TransactionFilter />
         </div>
         <div className="transactions">
@@ -218,6 +218,8 @@ const TransactionStyled = styled.div`
       opacity: 1;
       height: auto;
       width: 100%;
+      padding-inline: .5rem;
+
     }
 
     .filter-close {

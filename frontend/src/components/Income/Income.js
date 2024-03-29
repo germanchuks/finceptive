@@ -13,11 +13,11 @@ function Income() {
   // Toggle form on small screen size
   const isMobile = useMediaQuery({ maxWidth: 750 });
 
-  const [formOpen, setFormOpen] = useState(true)
+  const [incomeForm, setIncomeForm] = useState(false)
 
   useEffect(() => {
     if (!isMobile) {
-      setFormOpen(true)
+      setIncomeForm(true)
     }
   }, [isMobile])
 
@@ -25,7 +25,7 @@ function Income() {
   return (
     <IncomeStyled>
       <InnerLayout>
-        <div className={formOpen ? "form" : "form-close"}>
+        <div className={(incomeForm || !isMobile) ? "form" : "form-close"}>
           <div className="total-income"><h6>Total Income:</h6> {currency} {getTotalAmount(incomes)}</div>
           <Form />
         </div>
@@ -34,8 +34,8 @@ function Income() {
             <h4>All Income</h4>
             {
               isMobile &&
-              <div className="toggle-form" onClick={() => setFormOpen(!formOpen)}>
-                {formOpen ? hideIcon : dropIcon} <small>{formOpen ? 'Hide form' : 'Show form'}</small>
+              <div className="toggle-form" onClick={() => setIncomeForm(!incomeForm)}>
+                {incomeForm ? hideIcon : dropIcon} <small>{incomeForm ? 'Hide form' : 'Show form'}</small>
               </div>
             }
           </div>
@@ -115,6 +115,7 @@ const IncomeStyled = styled.div`
       opacity: 1;
       height: auto;
       width: 100%;
+      padding-inline: .5rem;
       
     }
 

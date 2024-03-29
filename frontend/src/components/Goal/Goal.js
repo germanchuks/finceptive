@@ -14,18 +14,18 @@ function Goal() {
   // Toggle form on small screen size
   const isMobile = useMediaQuery({ maxWidth: 750 });
 
-  const [formOpen, setFormOpen] = useState(true)
+  const [goalForm, setGoalForm] = useState(false)
 
   useEffect(() => {
     if (!isMobile) {
-      setFormOpen(true)
+      setGoalForm(true)
     }
   }, [isMobile])
 
   return (
     <GoalStyled>
       <InnerLayout>
-        <div className={formOpen ? "form" : "form-close"}>
+        <div className={(goalForm || !isMobile) ? "form" : "form-close"}>
           <div className="total-goal"><h6>Total Saved:</h6> {currency} {getTotalAmount(goals)}</div>
           <FormGoal />
         </div>
@@ -34,8 +34,8 @@ function Goal() {
             <h4>All Goals</h4>
             {
               isMobile &&
-              <div className="toggle-form" onClick={() => setFormOpen(!formOpen)}>
-                {formOpen ? hideIcon : dropIcon} <small>{formOpen ? 'Hide form' : 'Show form'}</small>
+              <div className="toggle-form" onClick={() => setGoalForm(!goalForm)}>
+                {goalForm ? hideIcon : dropIcon} <small>{goalForm ? 'Hide form' : 'Show form'}</small>
               </div>
             }
           </div>
@@ -116,6 +116,7 @@ const GoalStyled = styled.div`
       opacity: 1;
       height: auto;
       width: 100%;
+      padding-inline: .5rem;
       
     }
 

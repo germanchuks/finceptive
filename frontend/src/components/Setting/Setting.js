@@ -14,7 +14,7 @@ function Setting() {
 
   const [optionClicked, setOptionClicked] = useState('budget')
 
-  const isMobile = useMediaQuery({ minWidth: 750 });
+  const isLargeScreen = useMediaQuery({ minWidth: 750 });
 
   const showSetup = () => {
     switch (optionClicked) {
@@ -39,7 +39,10 @@ function Setting() {
     <SettingStyled>
 
       <div className="options-box">
-        <h4>Options</h4>
+        {
+          isLargeScreen &&
+          <h4>Options</h4>
+        }
         <ul className="options">
           {settingsOptions.map((option) => {
             return <li key={option.id}
@@ -49,7 +52,7 @@ function Setting() {
               className={optionClicked === option.id ? 'activeOption' : ''}>
               <span className="option-icon">{option.icon}</span>
               {
-                isMobile &&
+                isLargeScreen &&
                 <span>{option.title}</span>
               }
             </li>
