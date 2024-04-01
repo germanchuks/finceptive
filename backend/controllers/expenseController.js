@@ -29,7 +29,7 @@ exports.addExpense = async (req, res) => {
         }
 
         // Check if budget with category exists
-        const budget = await BudgetSchema.findOne({ category: category })
+        const budget = await BudgetSchema.findOne({ category: category, userId: userId })
 
         // Update budget if categories matches and budget exists
         if (budget) {
