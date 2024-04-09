@@ -19,7 +19,10 @@ function IncomeItem({
   const { currency, deleteIncome, getIncomes, getUserBalance } = useGlobalContext()
 
 
-  // const balance = parseFloat(availableBalance)
+  // Check if description is an empty string
+  const isDescription = (description) => {
+    return description ? description : "No description"
+  }
 
   // Check for category icon
   const getCategoryIcon = (category) => {
@@ -76,7 +79,7 @@ function IncomeItem({
         display: clicked ? 'flex' : 'none'
       }}>
         <div className="description">
-          {note} {description}
+          {note} {isDescription(description)}
         </div>
         <div className="delete-btn">
           <ButtonStyled style={{

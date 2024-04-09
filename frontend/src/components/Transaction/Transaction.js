@@ -49,10 +49,7 @@ function Transaction() {
       amountInRange = amount >= minAmount && amount <= maxAmount
     }
     if (minDate !== '') {
-      dateInRange = trDate >= minDate;
-    }
-    if (maxDate !== '') {
-      dateInRange = trDate <= maxDate;
+      dateInRange = trDate >= minDate && trDate <= maxDate;
     }
     return amountInRange && dateInRange;
   });

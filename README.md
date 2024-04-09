@@ -1,24 +1,25 @@
 # Finceptive: Your Financial Compass 🌐💰
 
-
 Finceptive is a user-friendly financial management application designed to empower individuals and small businesses to take control of their finances.
+
 
 ## Technologies 🚀
 
-- **Frontend:** React
-- **Backend:** Express.js, Node.js, MongoDB
-- **Authentication/Authorization:** JWT, OAuth
-- **Deployment:** Render (Backend), Vercel (Frontend)
-- **Testing:** Jest
+Finceptive is built using a robust and scalable technology stack:
+
+- **Frontend:** React.js
+- **Backend:** Express.js, Node.js
+- **Database:** MongoDB
+
 
 ## Features 🌟
 
-- Track income and expenses with multi-currency support
-- Categorize transactions
-- Analyze spending patterns
-- Set and track financial goals
-- Display transactions and goals in user-preferred currencies
-- Access educational financial resources (planned).
+- **Effortless Tracking**: Easily record income, expenses, and set financial goals within the app. Finceptive allows users to quickly add transactions with minimal effort and categorize them appropriately.
+- **Goal Setting**: Define custom financial goals and track your progress towards achieving them. Monitor your progress towards your goals with clear visualizations, keeping you focused on achieving your dreams.
+- **Budgeting**: Set spending limits for different categories. Allocate funds for various expenses, like groceries, entertainment, or transportation, ensuring you stay within your means.
+- **Intuitive Interface**: A user-friendly dashboard provides a clear overview of your financial health. Current account balances, goal progress, recent transactions, and budgets are displayed in a clear and easy-to-understand format.
+- **Responsive Design**: Access Finceptive seamlessly from any device, whether it's a desktop, tablet, or mobile phone.
+
 
 ## Target Users 🎯
 
@@ -26,21 +27,31 @@ Finceptive is a user-friendly financial management application designed to empow
 - Small businesses aiming to optimize their financial operations
 
 
-## Differentiation & Innovation 🌟
+## Usage
 
-Finceptive builds upon existing solutions like Mint and YNAB by offering:
+- Visit the deployed app at [Finceptive](https://finceptive.onrender.com).
+- Create an account or log in.
+- Start tracking your income and expenses.
+- Set financial goals and monitor your progress.
+- Create and manage budgets for different categories.
 
-- A simplified and intuitive user experience.
-- Support for both individuals and small businesses.
-- Bite-sized educational content on financial management and investment (planned).
-- Real-time currency conversion for multi-currency display.
 
-## Development Stack 💻
+## Contributing
 
-The MERN stack (MongoDB, Express.js, React, Node.js) is chosen for its flexibility, scalability, and popularity.
+We welcome contributions to Finceptive! If you're interested in helping improve the app, please refer to the [Contributing.md](CONTRIBUTING.md) file for guidelines.
+
+
+## Related Projects
+
+- Mint (https://mint.intuit.com/)
+- YNAB (https://www.ynab.com/)
+
 
 ## Authors 👥
 
 Michael Chukwunwe - [Github](https://github.com/stuckwithprogression)
 
 Daniel German - [Github](https://github.com/germanchuks)
+
+
+## Screenshot

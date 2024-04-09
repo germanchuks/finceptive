@@ -124,8 +124,10 @@ const BudgetStyled = styled.div`
         flex-direction: column;
         flex: 2;
         
-        .budget-bar {
-
+        .budget-bar { 
+            -ms-overflow-style: none; /* for Internet Explorer, Edge */
+            scrollbar-width: none; /* for Firefox */
+            overflow-y: scroll;
             .amount {
                 display: flex;
                 flex-direction: column;
@@ -134,6 +136,9 @@ const BudgetStyled = styled.div`
                 padding: 0.5rem;
                 font-size: smaller;
             }
+        }
+        .budget-bar::-webkit-scrollbar {
+            display: none; /* for Chrome, Safari, and Opera */
         }
         
         .no-budget {

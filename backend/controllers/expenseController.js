@@ -17,9 +17,9 @@ exports.addExpense = async (req, res) => {
 
     try {
         //Validations
-        if (!title || !category || !description || !date) {
+        if (!title || !category || !date) {
             return res.json({
-                error: 'All fields required'
+                error: 'Please provide all required fields'
             })
         }
         if (amount <= 0 || isNaN(amount)) {

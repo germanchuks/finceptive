@@ -19,7 +19,10 @@ function ExpenseItem({
   const { currency, deleteExpense, getExpenses, getUserBalance, getBudgets } = useGlobalContext()
 
 
-  // const balance = parseFloat(availableBalance)
+  // Check if description is an empty string
+  const isDescription = (description) => {
+    return description ? description : "No description"
+  }
 
   const getCategoryIcon = (category) => {
     const matchingCategory = expenseCategories.find(
@@ -76,7 +79,7 @@ function ExpenseItem({
         display: clicked ? 'flex' : 'none'
       }}>
         <div className="description">
-          {note} {description}
+          {note} {isDescription(description)}
         </div>
         <div className="delete-btn">
           <ButtonStyled style={{
