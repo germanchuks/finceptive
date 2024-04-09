@@ -1,3 +1,4 @@
+![finceptive](https://github.com/germanchuks/finceptive/assets/113668461/7eef0bbe-ab30-46d5-a7af-3ffd7283e73c)
 # Finceptive: Your Financial Compass 🌐💰
 
 Finceptive is a user-friendly financial management application designed to empower individuals and small businesses to take control of their finances.
@@ -55,3 +56,23 @@ Daniel German - [Github](https://github.com/germanchuks)
 
 
 ## Screenshot
+
+### Homepage
+![home](https://github.com/germanchuks/finceptive/assets/113668461/d4466f41-3ed5-49cd-b5a5-8df6cdf28ece)
+
+### Dashboard View
+![dashboard](https://github.com/germanchuks/finceptive/assets/113668461/a36b36ae-2673-4ada-b6ef-34f1cbf6a4aa)
+
+### Transactions View
+![transactions](https://github.com/germanchuks/finceptive/assets/113668461/32acd0e4-aaeb-41f5-b134-d6b5fbfa995f)
+
+### Incomes View
+![income](https://github.com/germanchuks/finceptive/assets/113668461/854cd1d5-4912-4672-8fa7-09d8a7d85c30)
+
+### Goals View
+![goals](https://github.com/germanchuks/finceptive/assets/113668461/d18866c6-610c-4adc-a734-a0a375e2d92d)
+
+### Settings View
+![settings](https://github.com/germanchuks/finceptive/assets/113668461/386f26f1-ee89-45db-ae63-84ad28a3383e)
+
+
